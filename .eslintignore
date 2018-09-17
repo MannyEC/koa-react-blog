@@ -1,0 +1,11 @@
+blueprints/**/files/**
+coverage/**
+node_modules/**
+dist/**
+*.spec.js
+src/index.html
+src/main.js
+*createStore.js
+*clientMiddleware.js
+src/store/reducers.js
+server/**

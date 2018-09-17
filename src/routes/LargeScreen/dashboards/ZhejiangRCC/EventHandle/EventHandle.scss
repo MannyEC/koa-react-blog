@@ -1,0 +1,81 @@
+
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 10.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}
+
+.header span{
+  font-size: 24px;
+  color: #c2cbe0;
+}
+
+.header:before {
+  width: 12px;
+  height: 12px;
+  border: 3px solid #00e4ff;
+  position: absolute;
+  content: "";
+  margin-top: 15px;
+  margin-left: -20px;
+}
+
+.progress {
+  height: 11px;
+  width: 287px;
+  background: #0e222e;
+  overflow: visible;
+  margin-top: 50px;
+}
+
+.progressBar {
+  background-color: #0e222e;
+  position: relative;
+  border-top: 11px solid red; 
+  border-right: 11px solid transparent; 
+  height: 100%;
+}
+
+.eventBg {
+  position: absolute;
+  margin-top: 10px;
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 460px;
+  margin-top: 60px;
+  margin-left: 20px;
+}
+
+.itemSection {
+  width: 80px;
+  height: 100px;
+  text-align: center;
+}
+
+.itemCount {
+  font-size: 18px;
+  color: #00e4ff;
+}
+
+.itemTitle {
+  margin-top: 30px;
+  font-size: 16px;
+  color: #d3d8ed;
+}

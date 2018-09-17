@@ -1,0 +1,113 @@
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  padding: 1.2rem 2rem;
+  color: #fff;
+}
+
+.content {
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.idx {
+  font-size: 30px;
+  margin-left: 35px;
+}
+
+.color{
+  @extend .idx;
+  color: rgba(90,204,242,0.80)
+}
+
+.color2{
+  @extend .idx;
+  color: rgba(90,204,242,0.80)
+}
+
+.color3{
+  @extend .idx;
+  color: rgba(90,204,242,0.60)
+}
+
+.color4{
+  @extend .idx;
+  color: rgba(90,204,242,0.45)
+}
+
+.color5{
+  @extend .idx;
+  color: rgba(90,204,242,0.30)
+}
+
+.unit{
+  border-left: 14px solid #5ACCF2;
+  background-color: rgba(49,49,65,0.50);
+  border-radius: 1px;
+  height: 60px;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 60px;
+}
+
+.unit2{
+    @extend .unit;
+    border-left: 14px solid rgba(90,204,242,0.80);
+}
+
+.unit3{
+    @extend .unit;
+    border-left: 14px solid rgba(90,204,242,0.60);
+}
+
+.unit4{
+    @extend .unit;
+    border-left: 14px solid rgba(90,204,242,0.45);
+}
+
+.unit5{
+    @extend .unit;
+    border-left: 14px solid rgba(90,204,242,0.30);
+}
+
+.dstip {
+  margin-left: 50px;
+  width: 160px;
+  font-size: 20px;
+  display: inline-block;
+}
+
+.detail {
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.number {
+  font-size: 28px;
+  margin-left: 15px;
+}
+
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 9.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}

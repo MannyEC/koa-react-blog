@@ -1,0 +1,207 @@
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@mixin animate($name, $duration, $iteration, $direction, $delay) {
+  -webkit-animation-duration: $duration;
+     -moz-animation-duration: $duration;
+       -o-animation-duration: $duration;
+          animation-duration: $duration;
+  -webkit-animation-iteration-count: $iteration;
+     -moz-animation-iteration-count: $iteration;
+       -o-animation-iteration-count: $iteration;
+          animation-iteration-count: $iteration;
+  -webkit-animation-name: $name;
+     -moz-animation-name: $name;
+       -o-animation-name: $name;
+          animation-name: $name;
+  -webkit-animation-direction: $direction;
+     -moz-animation-direction: $direction;
+       -o-animation-direction: $direction;
+          animation-direction: $direction;
+  -webkit-animation-delay: $delay;
+     -moz-animation-delay: $delay;
+       -o-animation-delay: $delay;
+          animation-delay: $delay;
+}
+
+@include keyframes(show) {
+  0% { opacity: 0.1; }
+  3% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@include keyframes(dashPath) {
+  0%{
+    opacity: 0;
+  }
+  3%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+@mixin show {
+  @include animate(show, 60s, infinite, normal, 3);
+}
+
+@mixin dashPath {
+  @include animate(dashPath, 60s, infinite, normal, 0);
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 10.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}
+
+.header span{
+  font-size: 24px;
+  color: #c2cbe0;
+}
+
+.header:before {
+  width: 12px;
+  height: 12px;
+  border: 3px solid #00e4ff;
+  position: absolute;
+  content: "";
+  margin-top: 15px;
+  margin-left: -20px;
+}
+
+.assetBg {
+  margin-top: 40px;
+}
+
+.hexagon {
+  @include show;
+}
+
+.hexagonTopL {
+  position: absolute;
+  margin: 40px 0 0 35px
+}
+
+.hexagonTopR {
+  position: absolute;
+  margin: 40px 0 0 295px;
+}
+
+.hexagonMidL {
+  position: absolute;
+  margin: 135px 0 0 -6px;
+}
+
+.hexagonMidR {
+  position: absolute;
+  margin: 135px 0 0 335px;
+}
+
+.hexagonBottomL {
+  position: absolute;
+  margin: 233px 0 0 35px
+}
+
+.hexagonBottomR {
+  position: absolute;
+  margin: 233px 0 0 295px;
+}
+
+.hexagonLabel {
+  position: absolute;
+  text-align: center;
+  width: 70px;
+}
+
+.hexagonLabelNum {
+  font-family: DS-Digital;
+  height: 55px;
+  color: #fff;
+  line-height: 55px;
+  font-size: 33px;
+}
+
+.hexagonLabelTitle {
+  font-family: Microsoft Yahei;
+  color: #fff;
+  width: 100px;
+  position: absolute;
+  margin-left: -15px;
+  margin-top: 5px;
+}
+
+.midLabel {
+  font-family: Microsoft Yahei;
+  height: 55px;
+  color: #c7c7c7;
+  position: absolute;
+  font-size: 20px;
+  margin-top: 100px;
+  margin-left: 137px;
+  width: 130px;
+  height: 130px;
+  text-align: center;
+}
+
+.midLabel div:nth-child(1) {
+  font-family: DS-Digital;
+  color: #fff;
+  font-size: 50px;
+  line-height: 50px;
+  margin-top: 25px;
+}
+
+.svgLineLeft {
+  position: absolute;
+  top: 100px;
+  left: 54px;
+  width: 100px;
+  height: 197px;
+  @include dashPath;
+}
+
+.svgLineRight {
+  position: absolute;
+  top: 100px;
+  left: 240px;
+  width: 100px;
+  height: 197px;
+  @include dashPath;
+}
+
+path {
+  stroke-dasharray: 5, 10;
+}

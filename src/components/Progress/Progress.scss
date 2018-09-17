@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0);
+}
+
+.children {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

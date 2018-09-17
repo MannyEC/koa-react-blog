@@ -1,0 +1,96 @@
+@import "../theme/font.scss";
+.container {
+  font-family: "Microsoft YaHei";
+  width: 433px;
+  height: 578px;
+  color: #fff;
+  margin-top: -10px;
+}
+
+.header {  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-sizing: border-box;
+  font-size: 22px;  
+}
+.headerBg {
+  background: url("../images/left_2_bg.png") no-repeat center;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+}
+.content {
+  font-size: 14px;
+  height: 530px;
+  color: #fff;
+}
+.conItem {
+  display: flex;
+  color: #1be0e9;
+  height: 43px;
+  align-items: center;
+}
+.conList {
+  align-items: center;
+  height: 483px;
+}
+.evenItem {  
+  height: 42px;
+  display: flex;
+  margin-bottom: 7px;
+}
+.oddItem {
+  @extend .evenItem;
+}
+.oddItem:last-child {
+  margin-bottom: 0px;
+}
+.successRate {
+  font-family: 'DS-Digital-Bold';
+  font-size: 36px;
+  color: #8bffa3;
+}
+.evenItemBg {
+  background: url("../images/table_even.png") no-repeat center;
+  background-size: 100% 100%;
+  display: flex;
+  width: 100%;
+  height: 100%;  
+  align-items: center;
+}
+.oddItemBg {
+  background: url("../images/table_odd.png") no-repeat center;
+  background-size: 100% 100%;
+  display: flex;
+  width: 100%;
+  height: 100%;  
+  align-items: center;
+}
+.selector {
+  text-align: center;
+  margin-bottom: 15px
+}
+
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 10.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}

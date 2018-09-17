@@ -1,0 +1,48 @@
+:global {
+  .rc-select-dropdown-menu {
+    outline: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    z-index: 9999;
+    font-size: .7rem;
+    max-height: 10rem;
+    // background: #063482;
+    position: relative;
+  }
+
+  .rc-dialog-mask {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: #373737;
+      background-color: rgba(55,55,55,.6);
+      height: 100%;
+      filter: alpha(opacity=50);
+      z-index: 9;
+  }
+
+  .rc-dialog-wrap {
+      position: fixed;
+      overflow: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      -webkit-overflow-scrolling: touch;
+      outline: 0;
+      z-index: 9;
+  }
+  .rc-select-search--inline .rc-select-search__field {
+    border: none;
+    font-size: 100%;
+    background: transparent;
+    outline: 0;
+    width: 100%;
+    color: #000;
+    margin: 0;
+    padding: 0;
+  }
+}

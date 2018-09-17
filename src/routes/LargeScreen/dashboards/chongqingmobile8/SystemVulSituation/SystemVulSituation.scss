@@ -1,0 +1,60 @@
+.container {
+  font-family: "Microsoft YaHei";
+  width: 100%;
+  width: 690px;
+  height: 246px;
+  margin-top: -10px;
+  color: #fff;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: -8px;
+}
+
+.header {  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-sizing: border-box;
+  padding: 12px 0 18px 0;
+  font-size: 22px;
+}
+.content {
+  height: 190px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.divisionTop {
+  background: url("../images/div_top.png") no-repeat center;
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  width: 690px;
+  margin-left: -30px;
+  height: 1px;
+  margin-bottom: 0;
+  padding: 0;
+}
+.selector {
+  text-align: center;
+  margin-bottom: 15px
+}
+
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 10.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}

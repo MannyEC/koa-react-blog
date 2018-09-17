@@ -1,0 +1,125 @@
+.container {
+  width: 1150px;
+  height: 100%;
+  margin: auto;
+  padding-top: 24px;
+}
+
+.create {
+  height: 340px;
+  width: 100%;
+  color: rgba(0, 0, 0, .45);
+}
+
+.card {
+  margin-bottom: 24px;
+}
+
+.statTime {
+  font-size: 14px;
+  color: rgba(0, 0, 0, .45);
+}
+
+.imageCover {
+  height: 197px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  > img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    transition: all .5s;
+  }
+  > img:hover {
+    transform: scale(1.05);
+    position: relative;
+    transition: all .5s;
+  }
+}
+
+.exportTitle {
+  font-size: 14px;
+  > span {
+    margin-left: 8px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .45);
+  }
+}
+
+.modalContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  .actionChoice {
+    width: 130px;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .85);
+    margin: auto 32px;
+    cursor: pointer;
+    .actionCard {
+      width: 130px;
+      height: 116px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px rgba(0, 0, 0, .15) solid;
+      border-radius: 4px;
+      > i {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      > div {
+        font-size: 14px;
+        padding: 12px 0 0;
+      }
+    }
+    .actionDescription {
+      margin-top: 8px;
+      font-size: 14px;
+      color: rgba(102, 102, 102, .85);
+      text-align: center;
+    }
+  }
+  .actionChoice:hover {
+    .actionCard {
+      border-color: #68b92e;
+      > div {
+        color: #68b92e;
+      }
+    }
+  }
+}
+
+.disabled {
+  color: rgba(0, 0, 0, .1);
+  cursor: default;
+}
+.disabled:hover {
+  color: rgba(0, 0, 0, .1);
+}
+.delete:hover {
+  color: #da251d;
+}
+.deleteContent {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deleteContent:hover {
+  color: #68b92e;
+}
+.deleteButton, .deleteButton:hover, .deleteButton::selection, .deleteButton:focus {
+  background: #da251d;
+  border-color: #da251d;
+  color: #fff;
+}

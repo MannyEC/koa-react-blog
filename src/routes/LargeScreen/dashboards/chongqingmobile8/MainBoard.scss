@@ -1,0 +1,67 @@
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    font-size: 22px;
+    line-height: 1.15;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.leftItems {
+    width: 488px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 30px 0 15px 35px;
+    box-sizing: border-box;
+    margin-right: 20px;
+}
+.rightItems {
+    @extend .leftItems;
+    width: 735px;
+    padding: 30px 45px 15px 0px;
+    margin-right: 0;
+}
+.leftBg {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0px;
+    width: 100%;
+    padding: 0
+}
+.rightBg {
+    background: url("./images/right_border.png") no-repeat center;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0px;
+    width: 100%;
+    padding: 0px;
+}
+.unit {
+    height: 258px;
+    width: 453px;
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
+.unit2 {
+    @extend .unit;
+    height: 576px;
+    margin-top:0;
+    margin-bottom: 0;
+}
+.rightItem:nth-child(1) {
+    height: 255px;
+    margin-bottom: 28px;
+}
+.rightItem:nth-child(2) {
+    height: 282px;
+    margin-bottom: 18px;
+}
+.rightItem:nth-child(3) {
+    height: 246px;
+    margin-bottom: 25px;
+}

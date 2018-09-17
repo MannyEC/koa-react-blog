@@ -1,0 +1,53 @@
+.container {
+  background-color: #ffffff;
+  height: 1000px;
+  width: 100%;
+}
+
+.articleList {
+  margin-top: 100px;
+}
+
+.articleCard {
+  display: flex;
+  background-color: #fffcf6;
+  height: 200px;
+  margin: 25px auto;
+  width: 900px;
+}
+
+.articleCardLink {
+  background: #c9cfd2;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.articleCardLink:hover {
+  background: #bdecff;
+}
+
+.articleCardDoc {
+  width: 90%;  
+  padding: 10px 30px;
+}
+
+.articleCardHeader {
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  font-family: Microsoft-YaHei;
+  font-weight: 800;
+  color: black;
+}
+
+.articleCardContent {
+  font-size: 15px;
+  color: #000;
+  height: 100px;
+}
+
+.articleCardTime {
+  
+}

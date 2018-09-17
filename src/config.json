@@ -1,0 +1,177 @@
+{
+    "name": "\u518d\u8bd5\u4e00\u54c8",
+    "id": 14,
+    "modules": [
+        {
+            "refresh_interval": null,
+            "display_type": "NetworkTraffic",
+            "id": 68,
+            "datasource_type": "DYNAMIC",
+            "title": "\u6d41\u91cf\u8d8b\u52bf",
+            "type": "NetworkTraffic",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "NetworkTraffic"
+                ],
+                "id": 1,
+                "index": 1,
+                "title": "\u6d41\u91cf\u8d8b\u52bf",
+                "type": "NetworkTraffic",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        },
+        {
+            "refresh_interval": null,
+            "display_type": "AttackedPeakDistrubution",
+            "id": 69,
+            "datasource_type": "DYNAMIC",
+            "title": "\u653b\u51fb\u5cf0\u503c\u5206\u5e03",
+            "type": "AttackedPeakDistrubution",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "AttackedPeakDistrubution"
+                ],
+                "id": 2,
+                "index": 2,
+                "title": "\u653b\u51fb\u5cf0\u503c\u5206\u5e03",
+                "type": "AttackedPeakDistrubution",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        },
+        {
+            "refresh_interval": null,
+            "display_type": "AtkSrcipTop5",
+            "id": 70,
+            "datasource_type": "DYNAMIC",
+            "title": "Top5\u653b\u51fb\u6e90IP",
+            "type": "AtkSrcipTop5",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "AtkSrcipTop5"
+                ],
+                "id": 3,
+                "index": 3,
+                "title": "Top5\u653b\u51fb\u6e90IP",
+                "type": "AtkSrcipTop5",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        },
+        {
+            "refresh_interval": null,
+            "display_type": "AttackCountRank",
+            "id": 71,
+            "datasource_type": "DYNAMIC",
+            "title": "\u653b\u51fb\u6b21\u6570\u6392\u540d",
+            "type": "AttackCountRank",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "AttackCountRank"
+                ],
+                "id": 4,
+                "index": 4,
+                "title": "\u653b\u51fb\u6b21\u6570\u6392\u540d",
+                "type": "AttackCountRank",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        },
+        {
+            "refresh_interval": null,
+            "display_type": "AttackDurationDistrubution",
+            "id": 72,
+            "datasource_type": "DYNAMIC",
+            "title": "\u653b\u51fb\u65f6\u957f\u5206\u5e03",
+            "type": "AttackDurationDistrubution",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "AttackDurationDistrubution"
+                ],
+                "id": 5,
+                "index": 5,
+                "title": "\u653b\u51fb\u65f6\u957f\u5206\u5e03",
+                "type": "AttackDurationDistrubution",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        },
+        {
+            "refresh_interval": null,
+            "display_type": "AtkSrcGeoTop",
+            "id": 73,
+            "datasource_type": "DYNAMIC",
+            "title": "\u653b\u51fb\u6e90\u5730\u7406\u4f4d\u7f6e\u5206\u5e03",
+            "type": "AtkSrcGeoTop",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "AtkSrcGeoTop"
+                ],
+                "id": 6,
+                "index": 6,
+                "title": "\u653b\u51fb\u6e90\u5730\u7406\u4f4d\u7f6e\u5206\u5e03",
+                "type": "AtkSrcGeoTop",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        },
+        {
+            "refresh_interval": null,
+            "display_type": "AtkDstipTop5",
+            "id": 74,
+            "datasource_type": "DYNAMIC",
+            "title": "TOP5\u88ab\u653b\u51fb\u76ee\u7684IP",
+            "type": "AtkDstipTop5",
+            "datasource_url": null,
+            "template_module": {
+                "support_display_types": [
+                    "AtkDstipTop5"
+                ],
+                "id": 7,
+                "index": 7,
+                "title": "TOP5\u88ab\u653b\u51fb\u76ee\u7684IP",
+                "type": "AtkDstipTop5",
+                "template": 1
+            },
+            "dashboard": 14,
+            "datasource": null
+        }
+    ],
+    "template": {
+        "height": 1080,
+        "thumb": "/static/yjfd/thumb.png",
+        "template_group": {
+            "industry": "\u8fd0\u8425\u5546",
+            "name": "\u91cd\u5e86\u79fb\u52a8",
+            "id": 1
+        },
+        "id": 1,
+        "layout_thumb": "/static/yjfd/layout.jpg",
+        "width": 1920,
+        "name": "yjfd"
+    },
+    "applicable_crowd": "DEVELOPER",
+    "user": 1,
+    "release": {
+        "state_time": "2018-07-20T02:50:38.360681Z",
+        "id": 68,
+        "release_uid": null,
+        "state": "RELEASE_STATE_DOING",
+        "dashboard": 14,
+        "queue_position": null
+    },
+    "dist": "release/d14hlh"
+}

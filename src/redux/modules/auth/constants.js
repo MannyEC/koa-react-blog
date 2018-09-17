@@ -1,0 +1,17 @@
+export const LOAD = 'ads-cloud/auth/LOAD';
+export const LOAD_SUCCESS = 'ads-cloud/auth/LOAD_SUCCESS';
+export const LOAD_FAIL = 'ads-cloud/auth/LOAD_FAIL';
+export const LOAD_PARAMS_ERROR = 'ads-cloud/auth/LOAD_PARAMS_ERROR';
+export const LOGIN = 'ads-cloud/auth/LOGIN';
+export const LOGIN_SUCCESS = 'ads-cloud/auth/LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'ads-cloud/auth/LOGIN_FAIL';
+export const LOGIN_PARAMS_ERROR = 'ads-cloud/auth/LOGIN_PARAMS_ERROR';
+export const LOGOUT = 'ads-cloud/auth/LOGOUT';
+export const LOGOUT_SUCCESS = 'ads-cloud/auth/LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'ads-cloud/auth/LOGOUT_FAIL';
+export const CLEAR_EXPIREDERROR = 'ads-cloud/auth/CLEAR_EXPIREDERROR';
+export const LOAD_USERNAME_HISTORY = 'ads-cloud/auth/LOAD_USERNAME_HISTORY';
+export const LOAD_IMAGE_VERIFICATION = 'ads-cloud/auth/LOAD_IMAGE_VERIFICATION';
+export const CHECK_IMAGE_VERIFICATION = 'ads-cloud/auth/CHECK_IMAGE_VERIFICATION';
+export const CHECK_IMAGE_VERIFICATION_SUCCESS = 'ads-cloud/auth/CHECK_IMAGE_VERIFICATION_SUCCESS';
+export const CHECK_IMAGE_VERIFICATION_FAIL = 'ads-cloud/auth/CHECK_IMAGE_VERIFICATION_FAIL';

@@ -1,0 +1,76 @@
+.container {
+  background: rgb(34, 44, 53);
+  width: 100%;
+  font-family: 'Microsoft-YaHei';
+  padding-bottom: 50px;
+}
+
+.header {
+  display: flex;
+}
+
+.logo {
+  color: #ffffff;
+  font-size: 20px;
+  width: 85px;
+  margin: 20px;
+  height: 130px;
+  text-align: center;
+  line-height: 50px;
+  padding: 40px 20px;
+  align-items: center;
+  border: 1px solid;
+}
+
+.expandMenu {
+  padding-top: 25px;
+}
+
+.expandMenuHeaderBar {
+  display: flex;
+}
+
+.expandMenuBarItem {
+  color: #ffffff;
+  margin: 0px 25px 10px 0;
+  font-size: 20px;
+
+  a {
+    color: #ffffff;
+  }
+}
+
+.expandMenuBarItemSelected {
+  border-bottom: 1px solid #ffffff;
+}
+
+.expandMenuContent {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pageContent {
+  display: flex;
+  margin-left: 80px;
+}
+
+.navSection {
+  width: 200px;
+  margin-right: 100px;
+  margin-top: 100px;
+
+}
+
+.navSectionAll {
+  color: #fff;
+  border-bottom: 1px solid #ffffffa6;
+}
+
+.navSectionItem {
+  color: #eaeaea;
+  margin: 15px 15px;
+}
+
+.navSectionItem:hover {
+  color: #ffffff;
+}

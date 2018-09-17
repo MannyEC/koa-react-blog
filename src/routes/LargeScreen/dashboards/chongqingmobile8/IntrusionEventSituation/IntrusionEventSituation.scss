@@ -1,0 +1,101 @@
+.container {
+  font-family: "Microsoft YaHei";
+  width: 690px;
+  height: 255px;
+  margin-top: -10px;
+  color: #fff;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 12px;
+  margin-left: -8px;
+}
+
+.header {  
+  margin: 0;
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+.content {
+  display: flex;
+  padding: 0px;
+  font-size: 14px;
+  height: 200px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.selector {
+  text-align: center;
+  margin-bottom: 15px
+}
+.leftItem {
+  width: 313px;
+  height: 100%;
+  padding: 0 15px;
+}
+.middleItem {
+  width: 1px;
+  height: 100%;
+  background: url("../images/div_right.png") no-repeat center;
+  background-size: 100% 100%;
+}
+.rightItem {
+  width: 315px;
+  height: 100%;
+  padding: 0 15px;
+  border-right: none;
+  padding-left: 56px;
+}
+.itemTitle {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+.itemCon {
+  height: calc(100% - 34px);
+}
+.items {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.processText {
+  display: flex;
+  justify-content: space-between;
+  width: 240px;
+  font-size: 12px;
+  line-height: 14px;
+  margin-bottom: 2px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.process {
+  height: 4px;
+  width: 240px;
+  background: #203455;
+  overflow: visible;
+  // margin-bottom: 10px;
+}
+.processBar {
+  background-color: #1be0e9;
+  position: relative;
+  height: 100%;
+}
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 10.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}

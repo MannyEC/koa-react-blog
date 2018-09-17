@@ -1,0 +1,89 @@
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.header {
+    display:inline-block;
+    width:100%;
+    height:42px;
+    line-height:40px;
+    position: relative;
+    padding: 5px 30px 0 15px;
+    text-decoration: none;
+    color: #029fc5;
+    font-size:20px;
+    background:url('../images/header.png') no-repeat;
+}
+
+.content{
+  width:100%;
+  padding-top:28px;
+  height:calc(100% - 45px);
+  margin-top:-3px; 
+  border-left: 2px solid #02d6fc;
+  border-right: 2px solid #02d6fc;
+  border-bottom: 2px solid #02d6fc;
+}
+
+.noData {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, .4);
+  position: absolute;
+  top: 9.5em;
+  width: 100%;
+}
+
+.noData > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noDataIcon {
+  color: rgba(90, 204, 242, .4);
+  font-size: 1.4em;
+  margin-right: .5em;
+}
+.iptable{
+    width:90%;
+    margin:0 auto;
+    border-collapse: separate;
+    text-align: left;
+    border-spacing: 0px;
+    border-radius: 4px 4px 0px 0px;
+}
+.iptable > thead{
+   color:#fff;
+   font-size:20px;
+   background:none;
+   line-height:46px;
+}
+.iptable > thead > tr,.iptable > tbody > tr{
+    transition: all 0.3s;
+}
+
+.iptable > thead > tr > th, .iptable > tbody > tr > td {
+    word-break: break-word;
+   // padding: 10px 0;
+    color:rgba(255,255,255,0.8);
+     border-top: 1px solid rgba(255, 255, 255,0.3);
+}
+.iptable > thead > tr > th {
+    text-align: left;
+    font-weight: 500;
+    transition: background 0.3s ease;
+}
+.iptable > tbody > tr > td {
+    font-size:16px;
+    transition: all 0.3s;
+}
+.iptable > tbody > tr:hover > td{
+  cursor:pointer;
+  color:#029fc5;
+}
+.iptable > tbody > tr:nth-child(even){
+  background:none;
+}
+
+
