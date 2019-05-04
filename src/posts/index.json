@@ -1,0 +1,16 @@
+[{
+	"filename" : "2015-12-12-h5tags-meter-progress.markdown",
+	"title" : "<progress><meter>标签",
+	"date" : "2015-12-10",
+	"desc" : "介绍HTML5<progress><meter>标签的用法"
+}, {
+	"filename" : "2015-12-13-html5-drag-drop.markdown",
+	"title" : "HTML5拖放 drag & drop",
+	"date" : "2015-12-13",
+	"desc" : "drag&drop 的示例和简介"
+}, {
+	"filename" : "2015-12-15-html5-web-worker.markdown",
+	"title" : "web worker基础",
+	"date" : "2015-12-10",
+	"desc" : "Web Workers 是 HTML5 提供的一个javascript多线程解决方案，它允许在浏览器后台执行javascript脚本，能够执行事务或者逻辑，并与页面及时的交互和响应。"
+}]

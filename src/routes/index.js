@@ -11,15 +11,12 @@ import { withRouter } from 'react-router-dom';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import asyncProvider from 'providers/asyncProvider';
 import { message } from 'antd';
-import { load as getLogin } from 'redux/modules/auth/actions';
 
-import MainContainer from './Main';
-import LoginContainer from './Login';
+import MainContainer, { mainReducer } from './Main';
 import NotFound from './NotFound';
-import LargeScreen, { largeScreenReducer } from './LargeScreen';
 
 export const rootReducer = {
-  ...largeScreenReducer
+  ...mainReducer,
 };
 
 const antdMessageConfig = () => {
@@ -29,7 +26,6 @@ const antdMessageConfig = () => {
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch =>
@@ -48,9 +44,6 @@ class ApplicationContainer extends React.Component {
       <Switch>
         <Route exact path="/" component={MainContainer} />
         <Route path="/main/:mainKey" component={MainContainer} />
-        <Route path="/login" component={LoginContainer} />
-        <Route exact path="/largescreen/:type" component={LargeScreen} />
-        <Route path="/largescreen/:type/:editKey" component={LargeScreen} />
         <Route component={NotFound} />
       </Switch>
     );
@@ -63,7 +56,6 @@ export default compose(
     async: ({ state, params }) => {
     },
     mapActions: {
-      getLogin
     }
   }),
   connect(mapStateToProps, mapDispatchToProps)

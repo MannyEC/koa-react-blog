@@ -7,193 +7,40 @@ import classNames from 'classnames';
 import Progress from 'components/Progress';
 import classes from './ArticleList.scss';
 
-class ArticleList extends Component {
+const renderList = (datas) => {
+  const ret = [];
+  datas.forEach((data, index) => {
+    ret.push(
+      <div className={classes.articleCard} key={index.toString()}>
+        <div className={classes.articleCardDoc}>
+          <header className={classes.articleCardHeader}>
+            {data.title}
+          </header>
+          <div className={classes.articleCardContent}>
+            {data.desc}
+          </div>
+          <div className={classes.articleCardTime}>
+            {data.date}
+          </div>
+        </div>
+        <div className={classes.articleCardLink}>
+          <Link to={`/main/article/${data.filename}`}>
+            <Icon type="right" theme="outlined" />
+          </Link>
+        </div>
+      </div>
+    );
+  });
+  return ret;
+};
 
+class ArticleList extends Component {
   render() {
+    const { articleList } = this.props;
+    const artList = renderList(articleList);
     return (
       <div className={classes.articleList}>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Link to={'/main/article/'}>
-              <Icon type="right" theme="outlined" />
-            </Link>
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
-        <div className={classes.articleCard}>
-          <div className={classes.articleCardDoc}>
-            <header className={classes.articleCardHeader}>
-              SlowHTTPtest 慢速连接攻击及解决
-            </header>
-            <div className={classes.articleCardContent}>
-              slowhttptest是一款进行慢速连接攻击测试的工具，建议在Linux环境中使用。同时
-              如果使用虚拟机，可能遇到构建有效连接数很少的情况
-              大部分的连接都会被pending和closed。所以最好在实体机上运行。
-            </div>
-            <div className={classes.articleCardTime}>
-              2018-09-15
-            </div>
-          </div>
-          <div className={classes.articleCardLink}>
-            <Icon type="right" theme="outlined" />
-          </div>
-        </div>
+        {artList}
       </div>
     );
   }

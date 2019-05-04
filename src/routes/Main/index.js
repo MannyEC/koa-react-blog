@@ -1,6 +1,10 @@
 import React from 'react';
 import MainContainer from './containers/MainContainer';
-import MainRoutes from './routes';
+import MainRoutes, { mainrouterReducer } from './routes';
+
+export const mainReducer = {
+  ...mainrouterReducer,
+};
 
 const Container = props => (
   <MainContainer>

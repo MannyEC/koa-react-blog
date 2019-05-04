@@ -1,42 +1,34 @@
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import withMessage from 'providers/withMessageProvider';
 import { push } from 'react-router-redux';
-import {
-  downloadDashboard,
-  copyDashboard,
-  deleteDashboard,
-  exportModalSet,
-  setDeleteModal
-} from 'redux/modules/Dashboards/actions';
+import asyncProvider from 'providers/asyncProvider';
+import { loadArticle } from '../modules/actions';
 import Article from '../components/ArticleComponent';
 
 
 const mapStateToProps = state => ({
-  dashboards: state.Dashboards.dashboards,
-  visible: state.Dashboards.exportModalVisible,
-  modalObject: state.Dashboards.exportModalObject,
-  downloading: state.Dashboards.downloading,
-  deleteVisible: state.Dashboards.deleteVisible,
-  deleteObject: state.Dashboards.deleteObject
+  article: state.Article.article,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       push,
-      downloadDashboard,
-      copyDashboard,
-      deleteDashboard,
-      exportModalSet,
-      setDeleteModal
+      loadArticle,
     },
     dispatch
   );
 
 export default compose(
   withRouter,
+  asyncProvider({
+    async: ({ state, params, dispatch }) => {
+      const promises = [];
+      const postName = params.articleId;
+      promises.push(dispatch(loadArticle(postName)));
+      return Promise.all(promises);
+    }
+  }),
   connect(mapStateToProps, mapDispatchToProps),
-  withMessage
 )(Article);

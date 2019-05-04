@@ -7,19 +7,16 @@ import classNames from 'classnames';
 import Progress from 'components/Progress';
 import classes from './Article.scss';
 import ReactMarkdown from 'react-markdown';
-import test from 'posts/test';
 
 class Article extends Component {
-
   render() {
+    const { article } = this.props;
     return (
       <div className={classes.container}>
-        <div><ReactMarkdown source={test}/></div>
+        <div><ReactMarkdown source={article} /></div>
       </div>
-
     );
   }
 }
-
 
 export default Article;

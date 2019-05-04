@@ -1,0 +1,105 @@
+---
+layout:     post
+title:      Js获取和操纵XML简介
+subtitle:   
+class:		"note"
+date:       2016-01-11 
+author:     "eckid"
+header-img: "img/note-bg.jpg"
+tags:
+    - JavaScript
+---
+
+# Js获取和操纵XML简介
+
+
+最近用到了JS读取XML文件的一些操作，记录一下。
+
+XML中往往是自定义的一些标签和属性的类似HTML的文档节点，所以JavaScript操纵XML也是通过DOM方式。
+
+XML文件的获取通过AJAX来实现。其中，如果直接使用原生JavaScript获取XML需要考虑浏览器的兼容性。在这里记录js和jQuery获取XML的方式。
+
+### JS方法的一个例子
+
+
+	window.onload = function(){
+		var file="xml/list.xml";
+		loadXml(file);
+		console.log(xmlDoc);
+		document.write(xmlDoc);
+	}
+
+	
+获取XML文件
+	
+	function loadXml(file){
+		try //Internet Explorer  
+		{  
+		 xmlDoc=new ActiveXObject("Microsoft.XMLDOM");  
+		 xmlDoc.async=false;  
+		 xmlDoc.load(file);  
+		}  
+		catch(e)  
+		{  
+		 try //Firefox, Mozilla, Opera, etc.  
+		 {  
+		  xmlDoc=document.implementation.createDocument("","",null);  
+		  xmlDoc.async=false;  
+		  xmlDoc.load(file);  
+		 }  
+		 catch(e)  
+		 {  
+		  try //Google Chrome  
+		  {  
+		   var xmlhttp = new window.XMLHttpRequest();  
+		   xmlhttp.open("GET",file,false);  
+		   xmlhttp.send(null);  
+		   xmlDoc = xmlhttp.responseXML.documentElement;  
+		  }  
+		  catch(e)  
+		  {  
+		   error=e.message;  
+		  }  
+		 }  
+		}  
+	
+	}
+
+从得到的XML中取数据
+
+	function setXmlDoc(){
+		var nodeList= xmlDoc.documentElement.getElementsByTagName("area"); // IE  
+		for(var i=0;i<nodeList.length;i++){  
+		    //...遍历操作...  
+		}  
+		  
+		var nodeList=xmlDoc.getElementsByTagName("area");  // 非IE  
+		for(var i=0;i<nodeList.length;i++){  
+		    //...遍历操作...  
+		}  	
+	}
+
+
+
+### jQuery的例子
+	
+	    var url = 'demo.xml';
+	    $.ajax({
+	            url: url,
+	            type: 'GET',
+	            dataType: 'xml',
+	            cache: false,
+	            async: false,
+	            error: function (xml) {
+	                alert('XML文档加载出错');
+	            },
+	            success: function (xml) {
+	                setTest(xml);
+				//取得XML后执行
+	            }
+	        });
+	
+
+
+
+其中ajax的cache和async是：缓存和异步的设置。ajax默认是异步的，所以如果XML文档与页面其他部分关联很大，还是设置同步为好。

@@ -31,34 +31,28 @@ const menuList = [{
     value: 'frontend',
   }, {
     label: 'JavaScript',
-    value: 'genres',
+    value: 'js',
   }, {
     label: 'CSS',
-    value: 'genres',
+    value: 'css',
   }, {
     label: 'Python',
-    value: 'genres',
+    value: 'python',
   }, {
     label: 'React',
-    value: 'genres',
-  }, {
-    label: 'React native',
-    value: 'genres',
-  }, {
-    label: 'network',
-    value: 'genres',
+    value: 'react',
   }, {
     label: 'algorithm',
     value: 'genres',
+  }, {
+    label: 'others',
+    value: 'others',
   }]
 }, {
-  label: 'Think & Life',
+  label: 'Life',
   value: 'think',
   children: [{
-    label: '随笔',
-    value: 'genres',
-  }, {
-    label: '技术思考',
+    label: '杂谈',
     value: 'genres',
   }, {
     label: '译文',
@@ -130,7 +124,6 @@ class ExpandMenu extends Component {
   render() {
     const { openStatus, selectIndex } = this.state;
     const menus = this.renderMenu(menuList);
-    console.log(menus)
     return (
       <div className={classes.expandMenu}>
         <div className={classes.expandMenuHeaderBar}>
@@ -164,14 +157,6 @@ export default class Main extends Component {
           </div>
         </header>
         <div className={classes.pageContent}>
-          <div className={classes.navSection}>
-            <div className={classes.navSectionAll}>归档(20)</div>
-            <div className={classes.navSectionItem}>2018-09(1)</div>
-            <div className={classes.navSectionItem}>2018-08(10)</div>
-            <div className={classes.navSectionItem}>2018-07(4)</div>
-            <div className={classes.navSectionItem}>2018-06(3)</div>
-            <div className={classes.navSectionItem}>2018-05(2)</div>
-          </div>
           {this.props.children}
         </div>
       </div>

@@ -1,3 +1,4 @@
 import ArticleListContainer from './containers/ArticleListContainer';
+import ArticleList from './modules';
 
-export default ArticleListContainer;
+export { ArticleListContainer, ArticleList };
