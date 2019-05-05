@@ -8,7 +8,7 @@ const debug = require('debug');
 const config = require('../config');
 const webpackDevMiddleware = require('./middleware/webpack-dev');
 const webpackHMRMiddleware = require('./middleware/webpack-hmr');
-const packageWebpackConfig = require('../build/webpack.config.packagedev');
+const portalWebpackConfig = require('../build/webpack.config.portal');
 const devWebpackConfig = require('../build/webpack.config.dev');
 
 const newDebug = debug('app:server');
@@ -40,8 +40,8 @@ app.use(convert(historyApiFallback({
 // ------------------------------------
 if (config.env === 'development') {
   let webpackConfig = devWebpackConfig;
-  if (config.app === 'package') {
-    webpackConfig = packageWebpackConfig;
+  if (config.app === 'portal') {
+    webpackConfig = portalWebpackConfig;
   }
   const compiler = webpack(webpackConfig);
 

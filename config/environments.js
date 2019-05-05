@@ -16,7 +16,7 @@ module.exports = {
         host: `${config.protocol}://${config.api_server}:${config.api_port}`,
         https: config.protocol === 'https',
         originUrl: '/api',
-        match: /(^\/api\/.*|^\/images\/.*|^\/static\/.*)/,
+        match: /(^\/api\/.*|^\/images\/.*)/,
         rejectUnauthorized: false,
         requestCert: true,
         agent: false

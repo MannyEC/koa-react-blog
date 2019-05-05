@@ -1,30 +1,23 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { AppContainer } from 'react-hot-loader';
+import { ConnectedRouter } from 'connected-react-router';
 import { LocaleProvider } from 'antd';
-import zhCN from 'antd/lib/locale-provider/zh_CN';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import store, { history } from './redux/store';
 import RootRoute from './routes';
-
 
 const MOUNT_NODE = document.querySelector('#root');
 
 let RootRender = (RootRoutes) => {
-
-  const { dispatch } = store;
-
   render(
-    <AppContainer>
-      <LocaleProvider locale={zhCN}>
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <RootRoutes />
-          </ConnectedRouter>
-        </Provider>
-      </LocaleProvider>
-    </AppContainer>,
+    <LocaleProvider locale={zh_CN}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <RootRoutes />
+        </ConnectedRouter>
+      </Provider>
+    </LocaleProvider>,
     MOUNT_NODE
   );
 };
@@ -45,13 +38,4 @@ if (__DEV__ && module.hot) {
       RenderError(error);
     }
   };
-  // module.hot.accept(['./routes'], () => {
-  //   rootRender(RootRoute)
-  // });
-  module.hot.accept();
-  // Enable Webpack hot module replacement for reducers
-  module.hot.accept(['./redux/modules'], () => {
-    const nextRootReducer = require('./redux/modules/index');
-    store.replaceReducer(nextRootReducer);
-  });
 }

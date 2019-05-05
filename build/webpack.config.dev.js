@@ -26,9 +26,24 @@ const APP_ENTRY_PATHS = [
   paths.client('main.js')
 ];
 
+// webpackConfig.entry = {
+//   app: APP_ENTRY_PATHS.concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
+// };
+
 webpackConfig.entry = {
+  'babel-polyfill': '@babel/polyfill',
+  'react': 'react',
+  'react-dom': 'react-dom',
   app: APP_ENTRY_PATHS.concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
 };
+
+// webpackConfig.entry = [
+//   '@babel/polyfill',
+//   'react',
+//   'react-dom',
+//   APP_ENTRY_PATHS[0],
+//   `webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`,
+// ];
 
 // ------------------------------------
 // Bundle Output
@@ -72,8 +87,6 @@ webpackConfig.plugins = [
 // ------------------------------------
 // We use cssnano with the postcss loader, so we tell
 // css-loader not to duplicate minimization.
-const BASE_CSS_LOADER = 'css-loader';
-
 // Add any packge names here whose styles need to be treated as CSS modules.
 // These paths will be combined into a single regex.
 const PATHS_TO_TREAT_AS_CSS_MODULES = [
@@ -93,23 +106,12 @@ const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false;
 
 webpackConfig.module.rules = [{
   test: /\.(js|jsx)$/,
-  include: /src/,
+  include: /(\\|\/)src/,
   exclude: /\.worker\.js$/,
   loader: 'babel-loader',
   options: {
     cacheDirectory: true,
-    plugins: [
-      'transform-runtime',
-      'transform-decorators-legacy',
-      [
-        'import',
-        {
-          libraryName: 'antd',
-          libraryDirectory: 'es'
-        }
-      ]
-    ],
-    presets: ['env', 'react', 'stage-0']
+    babelrc: true
   }
 }, {
   // 匹配 *.worker.js
@@ -125,28 +127,28 @@ webpackConfig.module.rules = [{
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
-      plugins: [
-        'transform-runtime',
-        'transform-decorators-legacy'
-      ],
-      presets: ['env', 'react', 'stage-0']
+      babelrc: true
     }
   }]
 }, {
   test: /\.less$/,
   use: [
-    {loader: 'style-loader'},
-    {loader: 'css-loader'},
+    { loader: 'style-loader' },
     {
-      loader: 'postcss-loader',
+      loader: 'css-loader',
       options: {
-        ident: 'postcss',
-        plugins: [
-          require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
-        ]
+        importLoaders: 1
       }
     },
-    {loader: 'less-loader'}
+    {
+      loader: 'less-loader',
+      options: {
+        modifyVars: {
+          // 'menu-inline-toplevel-item-height': '80px',
+        },
+        javascriptEnabled: true,
+      },
+    }
   ]
 }, {
   test: /\.scss$/,
@@ -170,7 +172,12 @@ webpackConfig.module.rules = [{
   exclude: excludeCSSModules,
   use: [
     { loader: 'style-loader' },
-    { loader: 'css-loader' },
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1
+      }
+    },
     {
       loader: 'postcss-loader',
       options: {
@@ -215,17 +222,20 @@ webpackConfig.optimization = {
 
 
 if (isUsingCSSModules) {
-  const cssModulesLoader = `${BASE_CSS_LOADER}?${[
-    'modules',
-    'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]'
-  ].join('&')}`;
+  const getCssModulesLoader = importLoaders => ({
+    loader: 'css-loader',
+    options: {
+      modules: true,
+      importLoaders,
+      localIdentName: '[name]__[local]___[hash:base64:5]'
+    }
+  });
   webpackConfig.module.rules.push({
     test: /\.scss$/,
     include: cssModulesRegex,
     use: [
       { loader: 'style-loader' },
-      { loader: cssModulesLoader },
+      getCssModulesLoader(2),
       {
         loader: 'postcss-loader',
         options: {
@@ -242,7 +252,7 @@ if (isUsingCSSModules) {
     include: cssModulesRegex,
     use: [
       { loader: 'style-loader' },
-      { loader: cssModulesLoader },
+      getCssModulesLoader(1),
       {
         loader: 'postcss-loader',
         options: {

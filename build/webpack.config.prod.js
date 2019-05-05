@@ -1,9 +1,9 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const debug = require('debug');
 const config = require('../config');
 
@@ -30,8 +30,10 @@ const APP_ENTRY_PATHS = [
 ];
 
 webpackConfig.entry = {
-  'babel-polyfill': 'babel-polyfill',
-  app: APP_ENTRY_PATHS
+  'babel-polyfill': '@babel/polyfill',
+  'react': 'react',
+  'react-dom': 'react-dom',
+  app: APP_ENTRY_PATHS,
 };
 
 // ------------------------------------
@@ -55,7 +57,9 @@ webpackConfig.plugins = [
     favicon: paths.client('static/favicon.ico'),
     filename: 'index.html',
     inject: 'body',
+    // chunks: ['babel-polyfill', 'vendor', 'common', 'app'],
     chunks: ['babel-polyfill', 'app', 'common', 'vendor'],
+    // chunksSortMode: 'manual',
     chunksSortMode: 'dependency',
     minify: {
       removeComments: true,
@@ -70,6 +74,7 @@ webpackConfig.plugins = [
       minifyURLs: true,
     }
   })
+
 ];
 
 // ------------------------------------
@@ -77,8 +82,6 @@ webpackConfig.plugins = [
 // ------------------------------------
 // We use cssnano with the postcss loader, so we tell
 // css-loader not to duplicate minimization.
-const BASE_CSS_LOADER = 'css-loader';
-
 // Add any packge names here whose styles need to be treated as CSS modules.
 // These paths will be combined into a single regex.
 const PATHS_TO_TREAT_AS_CSS_MODULES = [
@@ -98,23 +101,31 @@ const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false;
 
 webpackConfig.module.rules = [{
   test: /\.(js|jsx)$/,
-  include: /src/,
+  include: /www(\\|\/)src/,
   exclude: /\.worker\.js$/,
   loader: 'babel-loader',
   options: {
     cacheDirectory: true,
     plugins: [
-      'transform-runtime',
-      'transform-decorators-legacy',
+      ['@babel/plugin-transform-runtime'],
+      ['@babel/plugin-proposal-decorators', { legacy: true }],
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
       [
         'import',
         {
           libraryName: 'antd',
-          libraryDirectory: 'es'
+          libraryDirectory: 'es',
+          style: true
         }
       ]
     ],
-    presets: ['env', 'react', 'stage-0']
+    presets: [['@babel/preset-env', {
+      targets: {
+        esmodules: true
+      },
+      forceAllTransforms: true,
+      useBuiltIns: 'entry'
+    }], '@babel/preset-react']
   }
 }, {
   // 匹配 *.worker.js
@@ -131,37 +142,68 @@ webpackConfig.module.rules = [{
     options: {
       cacheDirectory: true,
       plugins: [
-        'transform-runtime',
-        'transform-decorators-legacy'
+        ['@babel/plugin-transform-runtime'],
+        ['@babel/plugin-proposal-decorators', { legacy: true }],
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
       ],
-      presets: ['env', 'react', 'stage-0']
+      presets: [['@babel/preset-env', {
+        targets: {
+          esmodules: true
+        },
+        forceAllTransforms: true,
+        useBuiltIns: 'entry'
+      }], '@babel/preset-react']
     }
   }]
 }, {
   test: /\.less$/,
-  exclude: /iconfont/,
-  use: [
-    'css-loader',
-    {
-      loader: 'postcss-loader',
-      options: {
-        ident: 'postcss',
-        plugins: [
-          require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
-        ]
-      }
-    },
-    'less-loader'
-  ]
+  // exclude: /iconfont/,
+  // include: cssModulesRegex,
+  use: [{
+    loader: 'css-loader',
+    options: {
+      modules: true,
+      importLoaders: 2,
+      localIdentName: '[local]'
+    }
+  }, {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss',
+      plugins: [
+        require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
+      ]
+    }
+  }, {
+    loader: 'less-loader',
+    options: {
+      javascriptEnabled: true,
+    }
+  }]
 }, {
-  test: /\.less$/,
-  include: /iconfont/,
-  use: [
-    'style-loader',
-    'css-loader',
-    'less-loader'
-  ]
-}, {
+//   test: /\.less$/,
+//   exclude: excludeCSSModules,
+//   use: [{
+//     loader: 'css-loader',
+//     options: {
+//       modules: true,
+//       importLoaders: 2,
+//     }
+//   }, {
+//     loader: 'postcss-loader',
+//     options: {
+//       ident: 'postcss',
+//       plugins: [
+//         require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
+//       ]
+//     }
+//   }, {
+//     loader: 'less-loader',
+//     options: {
+//       javascriptEnabled: true,
+//     }
+//   }]
+// }, {
   test: /\.scss$/,
   exclude: excludeCSSModules,
   use: [
@@ -218,16 +260,19 @@ webpackConfig.module.rules = [{
 // Don't split bundles during testing, since we only want import one bundle
 
 if (isUsingCSSModules) {
-  const cssModulesLoader = `${BASE_CSS_LOADER}?${[
-    'modules',
-    'importLoaders=1',
-    'localIdentName=[name]__[local]___[hash:base64:5]'
-  ].join('&')}`;
+  const getCssModulesLoader = importLoaders => ({
+    loader: 'css-loader',
+    options: {
+      modules: true,
+      importLoaders,
+      localIdentName: '[name]__[local]___[hash:base64:5]'
+    }
+  });
   webpackConfig.module.rules.push({
     test: /\.scss$/,
     include: cssModulesRegex,
     use: [
-      { loader: cssModulesLoader },
+      getCssModulesLoader(2),
       {
         loader: 'postcss-loader',
         options: {
@@ -243,7 +288,7 @@ if (isUsingCSSModules) {
     test: /\.css$/,
     include: cssModulesRegex,
     use: [
-      { loader: cssModulesLoader },
+      getCssModulesLoader(1),
       {
         loader: 'postcss-loader',
         options: {
@@ -272,7 +317,7 @@ webpackConfig.plugins.push(
     filename: '[name].[contenthash].css'
   }),
   new CompressionWebpackPlugin({
-    asset: '[path].gz[query]',
+    filename: '[path].gz[query]',
     algorithm: 'gzip',
     test: new RegExp('\\.(js|css)$'),
     threshold: 10240,
@@ -283,30 +328,42 @@ webpackConfig.plugins.push(
 webpackConfig.optimization = {
   splitChunks: {
     cacheGroups: {
-      common: {
-        name: 'common',
-        chunks: 'initial',
-        priority: -20,
-        reuseExistingChunk: true,
-        minChunks: 2
-      },
       vendor: {
         test: /[\\/]node_modules[\\/]/,
         name: 'vendor',
         priority: -10,
         chunks: 'initial',
         enforce: true
-      }
+      },
+      common: {
+        name: 'common',
+        chunks: 'initial',
+        priority: 10,
+        reuseExistingChunk: true,
+        minChunks: 2,
+      },
     }
   },
   runtimeChunk: false,
   minimize: true,
   minimizer: [
-    new OptimizeCSSAssetsPlugin({}),
-    new UglifyJsPlugin({
+    new TerserPlugin({
+      exclude: /\.min\.js$/,
       cache: true,
       parallel: true,
-      sourceMap: false
+      extractComments: false, // 移除注释
+    }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessorOptions: {
+        safe: true,
+        autoprefixer: { disable: true }, // 这里是个大坑，稍后会提到
+        mergeLonghand: false,
+        discardComments: {
+          removeAll: true // 移除注释
+        }
+      },
+      canPrint: true
     })
   ]
 };

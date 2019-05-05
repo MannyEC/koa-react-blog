@@ -1,22 +1,17 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const debug = require('debug');
 const config = require('../config');
-const packageConfig = require('../src/config.json');
 
 const newDebug = debug('app:webpack:config');
 const paths = config.utils_paths;
 
 newDebug('Create configuration.');
 const webpackConfig = {
-  mode: 'production',
+  mode: 'development',
   name: 'client',
   target: 'web',
-  devtool: false,
+  devtool: config.compiler_devtool,
   resolve: {
     modules: [paths.client(), 'node_modules'],
     extensions: ['.js', '.jsx', '.json']
@@ -26,14 +21,13 @@ const webpackConfig = {
 // ------------------------------------
 // Entry Points
 // ------------------------------------
-const APP_ENTRY_PATHS = [
-  paths.client('entries/index.js')
+
+const PORTAL_ENTRY_PATHS = [
+  paths.client('portal.js')
 ];
 
-
 webpackConfig.entry = {
-  'babel-polyfill': 'babel-polyfill',
-  app: APP_ENTRY_PATHS
+  portal: PORTAL_ENTRY_PATHS.concat(`webpack-hot-middleware/client?path=${config.compiler_public_path}__webpack_hmr`)
 };
 
 // ------------------------------------
@@ -41,9 +35,8 @@ webpackConfig.entry = {
 // ------------------------------------
 webpackConfig.output = {
   filename: `[name].[${config.compiler_hash_type}].js`,
-  path: paths.packages(),
-  publicPath: config.compiler_public_path + packageConfig.dist + '/',
-  globalObject: 'this'
+  path: paths.dist(),
+  publicPath: config.compiler_public_path
 };
 
 // ------------------------------------
@@ -52,13 +45,11 @@ webpackConfig.output = {
 webpackConfig.plugins = [
   new webpack.DefinePlugin(config.globals),
   new HtmlWebpackPlugin({
-    title: packageConfig.name,
-    template: paths.client('entries/index.html'),
+    template: paths.client('portal.html'),
     hash: false,
     favicon: paths.client('static/favicon.ico'),
     filename: 'index.html',
     inject: 'body',
-    chunks: ['babel-polyfill', 'app', 'common', 'vendor'],
     chunksSortMode: 'dependency',
     minify: {
       removeComments: true,
@@ -72,7 +63,7 @@ webpackConfig.plugins = [
       minifyCSS: true,
       minifyURLs: true,
     }
-  })
+  }),
 ];
 
 // ------------------------------------
@@ -102,7 +93,6 @@ const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false;
 webpackConfig.module.rules = [{
   test: /\.(js|jsx)$/,
   include: /src/,
-  exclude: /\.worker\.js$/,
   loader: 'babel-loader',
   options: {
     cacheDirectory: true,
@@ -113,52 +103,15 @@ webpackConfig.module.rules = [{
         'import',
         {
           libraryName: 'antd',
-          libraryDirectory: 'es'
+          libraryDirectory: 'es',
+          style: true
         }
       ]
     ],
     presets: ['env', 'react', 'stage-0']
   }
 }, {
-  // 匹配 *.worker.js
-  test: /\.worker\.js$/,
-  use: [{
-    loader: 'worker-loader',
-    options: {
-      inline: true
-      // fallback: false
-      // publicPath: '/scripts/workers/'
-    }
-  }, {
-    loader: 'babel-loader',
-    options: {
-      cacheDirectory: true,
-      plugins: [
-        'transform-runtime',
-        'transform-decorators-legacy'
-      ],
-      presets: ['env', 'react', 'stage-0']
-    }
-  }]
-}, {
   test: /\.less$/,
-  exclude: /iconfont/,
-  use: [
-    'css-loader',
-    {
-      loader: 'postcss-loader',
-      options: {
-        ident: 'postcss',
-        plugins: [
-          require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
-        ]
-      }
-    },
-    'less-loader'
-  ]
-}, {
-  test: /\.less$/,
-  include: /iconfont/,
   use: [
     'style-loader',
     'css-loader',
@@ -168,6 +121,7 @@ webpackConfig.module.rules = [{
   test: /\.scss$/,
   exclude: excludeCSSModules,
   use: [
+    { loader: 'style-loader' },
     { loader: 'css-loader' },
     {
       loader: 'postcss-loader',
@@ -184,6 +138,7 @@ webpackConfig.module.rules = [{
   test: /\.css$/,
   exclude: excludeCSSModules,
   use: [
+    { loader: 'style-loader' },
     { loader: 'css-loader' },
     {
       loader: 'postcss-loader',
@@ -220,6 +175,14 @@ webpackConfig.module.rules = [{
 
 // Don't split bundles during testing, since we only want import one bundle
 
+webpackConfig.optimization = {
+  splitChunks: {
+    chunks: 'all',
+    name: 'vendor',
+  }
+};
+
+
 if (isUsingCSSModules) {
   const cssModulesLoader = `${BASE_CSS_LOADER}?${[
     'modules',
@@ -230,6 +193,7 @@ if (isUsingCSSModules) {
     test: /\.scss$/,
     include: cssModulesRegex,
     use: [
+      { loader: 'style-loader' },
       { loader: cssModulesLoader },
       {
         loader: 'postcss-loader',
@@ -246,6 +210,7 @@ if (isUsingCSSModules) {
     test: /\.css$/,
     include: cssModulesRegex,
     use: [
+      { loader: 'style-loader' },
       { loader: cssModulesLoader },
       {
         loader: 'postcss-loader',
@@ -260,58 +225,12 @@ if (isUsingCSSModules) {
   });
 }
 
-
-webpackConfig.module.rules
-  .filter(loader => loader.use && loader.use.find(use => /(css|less)/.test(use.loader)))
-  .forEach((loader) => {
-    const [...rest] = loader.use;
-    loader.use = [
-      MiniCssExtractPlugin.loader,
-      ...rest
-    ];
-  });
+newDebug('Enable plugins for live development (HMR, NoErrors).');
 webpackConfig.plugins.push(
-  new MiniCssExtractPlugin({
-    filename: '[name].[contenthash].css'
-  }),
-  new CompressionWebpackPlugin({
-    asset: '[path].gz[query]',
-    algorithm: 'gzip',
-    test: new RegExp('\\.(js|css)$'),
-    threshold: 10240,
-    minRatio: 0.8,
-    deleteOriginalAssets: true
-  })
+  new webpack.NamedModulesPlugin(),
+  new webpack.HotModuleReplacementPlugin(),
+  new webpack.NoEmitOnErrorsPlugin()
 );
-webpackConfig.optimization = {
-  splitChunks: {
-    cacheGroups: {
-      common: {
-        name: 'common',
-        chunks: 'initial',
-        priority: -20,
-        reuseExistingChunk: true,
-        minChunks: 2
-      },
-      vendor: {
-        test: /[\\/]node_modules[\\/]/,
-        name: 'vendor',
-        priority: -10,
-        chunks: 'initial',
-        enforce: true
-      }
-    }
-  },
-  runtimeChunk: false,
-  minimize: true,
-  minimizer: [
-    new OptimizeCSSAssetsPlugin({}),
-    new UglifyJsPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: false
-    })
-  ]
-};
+
 
 module.exports = webpackConfig;

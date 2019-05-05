@@ -1,8 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import { AppContainer } from 'react-hot-loader';
+import { ConnectedRouter } from 'connected-react-router';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import store, { history } from '../redux/store';
@@ -14,15 +13,13 @@ sessionStorage.setItem('package', true);
 
 let RootRender = (RootRoutes) => {
   render(
-    <AppContainer>
-      <LocaleProvider locale={zhCN}>
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <RootRoutes />
-          </ConnectedRouter>
-        </Provider>
-      </LocaleProvider>
-    </AppContainer>,
+    <LocaleProvider locale={zhCN}>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <RootRoutes />
+        </ConnectedRouter>
+      </Provider>
+    </LocaleProvider>,
     MOUNT_NODE
   );
 };

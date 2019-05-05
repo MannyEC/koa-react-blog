@@ -1,7 +1,7 @@
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import asyncProvider from 'providers/asyncProvider';
 import { loadArticle } from '../modules/actions';
 import Article from '../components/ArticleComponent';

@@ -21,7 +21,6 @@ const config = {
   path_base: path.resolve(__dirname, '..'),
   dir_client: 'src',
   dir_dist: 'dist',
-  dir_packages: 'packages',
   dir_server: 'server',
   dir_test: 'tests',
   api_server: process.env.API_HOST || 'localhost',
@@ -113,8 +112,7 @@ const base = (...args) =>
 config.utils_paths = {
   base,
   client: base.bind(null, config.dir_client),
-  dist: base.bind(null, config.dir_dist),
-  packages: base.bind(null, config.dir_packages)
+  dist: base.bind(null, config.dir_dist)
 };
 
 
