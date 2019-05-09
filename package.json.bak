@@ -14,14 +14,37 @@
     "npm": "^5.0.0"
   },
   "scripts": {
+    "clean": "rimraf dist",
+    "compile": "better-npm-run compile",
+    "lint": "eslint src tests server",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "better-npm-run start",
     "dev": "better-npm-run dev",
-    "dev:start": "better-npm-run dev:start",
-    "build:server": "better-npm-run build:server",
-    "build:client": "better-npm-run build:client"
+    "api": "better-npm-run api",
+    "portal": "better-npm-run portal",
+    "test": "jest --config jest.config.js",
+    "test:dev": "npm run test -- --watch",
+    "deploy": "better-npm-run deploy",
+    "deploy:dev": "better-npm-run deploy:dev",
+    "deploy:prod": "better-npm-run deploy:prod",
+    "codecov": "cat coverage/*/lcov.info | codecov",
+    "i18n": "better-npm-run i18n"
   },
   "betterScripts": {
+    "compile": {
+      "command": "node bin/compile",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "i18n": {
+      "command": "babel-node bin/i18n",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
     "dev": {
-      "command": "npm-run-all --parallel dev:** build:**",
+      "command": "node --max_old_space_size=2048 bin/server",
       "env": {
         "NODE_ENV": "development",
         "APP": "main",
@@ -34,21 +57,62 @@
         "NODE_TLS_REJECT_UNAUTHORIZED": 0
       }
     },
-    "dev:start": {
-      "command": "nodemon --watch build --exec node \"./ektp_site/bundle.js\"",
+    "api": {
+      "command": "node --max_old_space_size=2048 bin/apiserver",
+      "env": {
+        "NODE_ENV": "development",
+        "APP": "main",
+        "DEBUG": "app:*",
+        "PROTOCOL": "https",
+        "API_HOST": "localhost",
+        "API_PORT": 8900,
+        "HOST": "localhost",
+        "PORT": 4000,
+        "NODE_TLS_REJECT_UNAUTHORIZED": 0
+      }
+    },
+    "portal": {
+      "command": "node --max_old_space_size=2048 bin/server",
+      "env": {
+        "NODE_ENV": "development",
+        "APP": "portal",
+        "DEBUG": "app:*",
+        "PROTOCOL": "https",
+        "API_HOST": "1.1.1.1",
+        "API_PORT": 443,
+        "HOST": "localhost",
+        "PORT": 5000,
+        "NODE_TLS_REJECT_UNAUTHORIZED": 0
+      }
+    },
+    "deploy": {
+      "command": "npm run clean && npm run compile",
       "env": {
         "DEBUG": "app:*"
       }
     },
-    "build:server": {
-      "command": "webpack --config ./ektp_configs/webpack.config.server.js --watch",
+    "deploy:dev": {
+      "command": "npm run deploy",
       "env": {
-        "NODE_ENV": "test",
+        "NODE_ENV": "development",
         "DEBUG": "app:*"
       }
     },
-    "build:client": {
-      "command": "webpack --config ./ektp_configs/webpack.config.client.js --watch",
+    "deploy:prod": {
+      "command": "npm run deploy",
+      "env": {
+        "NODE_ENV": "production",
+        "DEBUG": "app:*"
+      }
+    },
+    "start": {
+      "command": "babel-node bin/server",
+      "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "test": {
+      "command": "babel-node ./node_modules/karma/bin/karma start build/karma.conf",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
@@ -58,6 +122,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "ant-design-pro": "^2.1.1",
+    "antd": "^3.11.4",
     "classnames": "^2.2.5",
     "connected-react-router": "^6.0.0",
     "echarts": "^4.2.0-rc.2",
@@ -87,7 +152,7 @@
     "react-redux": "^6.0.0",
     "react-router": "^4.3.1",
     "react-router-config": "^4.4.0-beta.6",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^4.2.2",
     "react-select": "^2.1.2",
     "react-sizeme": "^2.3.6",
     "redux": "^4.0.1",
@@ -139,9 +204,7 @@
     "less-loader": "^4.0.6",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.7.2",
-    "nodemon": "^1.19.0",
     "npm": "^6.5.0",
-    "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "phantomjs-prebuilt": "^2.1.16",
     "piping": "^1.0.0-rc.4",
@@ -164,8 +227,6 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3",
-    "webpack-merge": "^4.2.1",
-    "webpack-node-externals": "^1.7.2",
     "worker-loader": "^2.0.0",
     "yargs": "^12.0.5"
   }
