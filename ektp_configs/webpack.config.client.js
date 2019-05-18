@@ -37,7 +37,7 @@ webpackConfig.entry = {
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-  filename: 'bundle.js',
+  filename: `[name].[aaa].js`,
   path: path.resolve(__dirname, '../ektp_site'),
   // publicPath: config.compiler_public_path,
   globalObject: 'this'

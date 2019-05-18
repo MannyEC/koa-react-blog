@@ -1,31 +1,20 @@
-// require('theme/antd.overrides.less');
-// require('theme/iconfont.less');
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose, bindActionCreators } from 'redux';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { isEmpty, isEqual } from 'lodash';
 import { withRouter } from 'react-router-dom';
-import { Route, Switch, Redirect } from 'react-router-dom';
-// import asyncProvider from 'providers/asyncProvider';
-import ReactHighcharts from 'react-highcharts';
-// import highchartsNoData from 'highcharts-no-data-to-display';
-// import MainContainer, { mainReducer } from './Main';
-// import NotFound from './NotFound';
+import { Route, Switch } from 'react-router-dom';
+import PageAContainer, { pageAReducer, PageAinitLoader } from './PageA';
+import PageBContainer, { pageBReducer } from './PageB';
 
 export const rootReducer = {
-  // ...mainReducer
-};
-
-const MainContainer = (props) => {
-  return (<div>if only there has a page</div>);
+  ...pageAReducer,
+  ...pageBReducer
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
-  license: state.License.license,
+  name: state.auth.name,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -34,15 +23,43 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+const renderRoutes = (routes) => {
+  const ret = [];
+  routes.forEach((routeConfig, index) => {
+    ret.push(
+      <Route
+        key={index.toString()}
+        path={routeConfig.path}
+        component={routeConfig.component}
+      />
+    );
+  });
+  return ret;
+};
+
+// 我想routerConfigs也可以向上级传递
+export const RouterConfigs = [{
+  path: '/main/rootA',
+  component: PageAContainer,
+  loadData: PageAinitLoader,
+  routes: []
+}, {
+  path: '/main/rootB',
+  component: PageBContainer,
+  loadData: null,
+  routes: []
+}];
+
 class ApplicationContainer extends React.Component {
   static propTypes = {
     language: PropTypes.string
   }
 
   render() {
+    const routeCom = renderRoutes(RouterConfigs);
     return (
       <Switch>
-        <Route exact path="/" component={MainContainer} />
+        {routeCom}
       </Switch>
     );
   }
@@ -51,18 +68,5 @@ class ApplicationContainer extends React.Component {
 export default compose(
   hot(module),
   withRouter,
-  // asyncProvider({
-  //   async: ({ state, params }) => {
-  //     let actionParams = {};
-  //     const { user } = state.auth;
-  //     if (isEmpty(user)) {
-  //       actionParams = {
-  //       };
-  //     }
-  //     return actionParams;
-  //   },
-  //   mapActions: {
-  //   }
-  // }),
   connect(mapStateToProps, mapDispatchToProps)
 )(ApplicationContainer);

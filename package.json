@@ -17,7 +17,8 @@
     "dev": "better-npm-run dev",
     "dev:start": "better-npm-run dev:start",
     "build:server": "better-npm-run build:server",
-    "build:client": "better-npm-run build:client"
+    "build:client": "better-npm-run build:client",
+    "just-server": "better-npm-run just-server"
   },
   "betterScripts": {
     "dev": {
@@ -34,8 +35,22 @@
         "NODE_TLS_REJECT_UNAUTHORIZED": 0
       }
     },
+    "just-server": {
+      "command": "npm-run-all --parallel dev:start build:server",
+      "env": {
+        "NODE_ENV": "development",
+        "APP": "main",
+        "DEBUG": "app:*",
+        "PROTOCOL": "http",
+        "API_HOST": "127.0.0.1",
+        "API_PORT": 8910,
+        "HOST": "localhost",
+        "PORT": 4000,
+        "NODE_TLS_REJECT_UNAUTHORIZED": 0
+      }
+    },
     "dev:start": {
-      "command": "nodemon --watch build --exec node \"./ektp_site/bundle.js\"",
+      "command": "nodemon --watch ektp_site --exec node \"./ektp_site/bundle.js\"",
       "env": {
         "DEBUG": "app:*"
       }

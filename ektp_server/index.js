@@ -5,6 +5,7 @@ const Koa = require('koa');
 const fs = require('fs');
 const path = require('path');
 var Router = require('koa-router');
+const staticServer = require('koa-static');
 
 var filePath = path.resolve('./src/posts');
 var router = new Router();
@@ -29,7 +30,7 @@ router.get('/api/v1/posts', async (ctx, next) => {
 
 // get post content
 router.get('/api/v1/post/:id', async (ctx, next) => {
-  const id = ctx.params.id;
+  const { id } = ctx.params;
   let ret = null;
   await new Promise((resolve, reject) => {
     fs.readFile(`${filePath}/${id}`, function(err, data) {
@@ -47,6 +48,11 @@ app.use(index.routes(), index.allowedMethods());
 app
   .use(router.routes())
   .use(router.allowedMethods());
+
+app.use(staticServer('./ektp_site'));
+app.on('error', (err, ctx) => {
+  console.error('server error', err, ctx);
+});
 
 app.listen(8910);
 console.log(`api server is listening on ${8910}`);

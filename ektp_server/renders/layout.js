@@ -12,20 +12,19 @@ exports.layout = function (content, initState) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="shortcut icon" href="/favicon.ico">
     <link href="/main.css" rel="stylesheet">
-    <link href="/static/css/main.css" rel="stylesheet">
-    <title>React App</title>
-
-    
+    <title>Eckid Blooooooog</title>
 </head>
 
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"> ${content}</div>
     <script>window.__INITIAL_STATE__ =${JSON.stringify(initState)}</script>
-    <script type="text/javascript" src="/static/js/main.js"></script>
+    <script type="text/javascript" src="/babel-polyfill.[aaa].js"></script>
+    <script type="text/javascript" src="/react.[aaa].js"></script>
+    <script type="text/javascript" src="/react-dom.[aaa].js"></script>
+    <script type="text/javascript" src="/vendor.[aaa].js"></script>
+    <script type="text/javascript" src="/app.[aaa].js"></script>
 </body>
 
 </html>

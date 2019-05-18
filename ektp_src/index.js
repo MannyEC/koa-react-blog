@@ -20,19 +20,19 @@ let RootRender = (RootRoutes) => {
 };
 
 RootRender(RootRoute);
-// Enable HMR and catch runtime errors in RedBox
-// This code is excluded from production bundle
-if (__DEV__ && module.hot) {
-  const RenderApp = RootRender;
-  const RenderError = (error) => {
-    const RedBox = require('redbox-react');
-    render(<RedBox error={error} />, MOUNT_NODE);
-  };
-  RootRender = (RootRoute) => {
-    try {
-      RenderApp(RootRoute);
-    } catch (error) {
-      RenderError(error);
-    }
-  };
-}
+// // Enable HMR and catch runtime errors in RedBox
+// // This code is excluded from production bundle
+// if (__DEV__ && module.hot) {
+//   const RenderApp = RootRender;
+//   const RenderError = (error) => {
+//     const RedBox = require('redbox-react');
+//     render(<RedBox error={error} />, MOUNT_NODE);
+//   };
+//   RootRender = (RootRoute) => {
+//     try {
+//       RenderApp(RootRoute);
+//     } catch (error) {
+//       RenderError(error);
+//     }
+//   };
+// }

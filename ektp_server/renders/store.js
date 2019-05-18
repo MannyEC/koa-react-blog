@@ -3,14 +3,19 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createMemoryHistory from 'history/createMemoryHistory';
 import createRootReducer from '../../ektp_src/redux/modules';
+import ApiClient from '../../ektp_src/redux/ApiClient';
+import clientMiddleware from '../../ektp_src/redux/middleware/clientMiddleware';
 
-// export const history = createMemoryHistory();
+export const client = new ApiClient();
 
 const getCreateStore = (ctx) => {
   const initialState = {};
   const path = ctx.req.url;
   const history = createMemoryHistory({ initialEntries: [path] });
-  const middleware = [routerMiddleware(history)];
+  const middleware = [
+    routerMiddleware(history),
+    clientMiddleware(client),
+  ];
   const composedEnhancers = compose(applyMiddleware(...middleware));
   const store = createStore(createRootReducer(history), initialState, composedEnhancers);
   return { history, store };
