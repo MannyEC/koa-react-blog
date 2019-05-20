@@ -3,6 +3,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const debug = require('debug');
 // const config = require('../config');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const newDebug = debug('app:webpack:config');
 // const paths = config.utils_paths;
@@ -147,7 +151,7 @@ webpackConfig.module.rules = [{
       options: {
         ident: 'postcss',
         plugins: [
-          require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
+          // require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
         ]
       }
     },
@@ -252,12 +256,53 @@ if (isUsingCSSModules) {
   });
 }
 
-newDebug('Enable plugins for live development (HMR, NoErrors).');
 webpackConfig.plugins.push(
-  new webpack.NamedModulesPlugin(),
-  new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoEmitOnErrorsPlugin()
+  new MiniCssExtractPlugin({
+    filename: '[name].[contenthash].css'
+  }),
 );
 
+webpackConfig.optimization = {
+  splitChunks: {
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendor',
+        priority: -10,
+        chunks: 'initial',
+        enforce: true
+      },
+      common: {
+        name: 'common',
+        chunks: 'initial',
+        priority: 10,
+        reuseExistingChunk: true,
+        minChunks: 2,
+      },
+    }
+  },
+  runtimeChunk: false,
+  minimize: true,
+  minimizer: [
+    new TerserPlugin({
+      exclude: /\.min\.js$/,
+      cache: true,
+      parallel: true,
+      extractComments: false, // 移除注释
+    }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessorOptions: {
+        safe: true,
+        autoprefixer: { disable: true }, // 这里是个大坑，稍后会提到
+        mergeLonghand: false,
+        discardComments: {
+          removeAll: true // 移除注释
+        }
+      },
+      canPrint: true
+    })
+  ]
+};
 
 module.exports = webpackConfig;

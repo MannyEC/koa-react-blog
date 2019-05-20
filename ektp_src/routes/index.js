@@ -7,10 +7,14 @@ import { withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import PageAContainer, { pageAReducer, PageAinitLoader } from './PageA';
 import PageBContainer, { pageBReducer } from './PageB';
+import Article, { articleReducer } from './Article';
+import ArticleList, { articleListReducer } from './ArticleList';
 
 export const rootReducer = {
   ...pageAReducer,
-  ...pageBReducer
+  ...pageBReducer,
+  ...articleReducer,
+  ...articleListReducer,
 };
 
 const mapStateToProps = state => ({
@@ -46,6 +50,16 @@ export const RouterConfigs = [{
 }, {
   path: '/main/rootB',
   component: PageBContainer,
+  loadData: null,
+  routes: []
+}, {
+  path: '/main/index',
+  component: Article,
+  loadData: null,
+  routes: []
+}, {
+  path: '/main/article/:articleId',
+  component: ArticleList,
   loadData: null,
   routes: []
 }];

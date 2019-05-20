@@ -13,71 +13,47 @@ function formatUrl(path) {
   return adjustedPath;
 }
 
+function nodeUrl(path) {
+  return `http://localhost:8910/api/v1${path}`;
+}
+
 class _ApiClient {
   constructor(req) {
     const isWindow = typeof global.window === 'object' ? true : false;
-    if (!isWindow) {
-      methods.forEach(method =>
-        this[method] = (path, {
-          params, data, headers, resType
-        } = {}) => new Promise((resolve, reject) => {
-          resolve([{
-            title: 'aaaaaaaaaaaaaaaaaaaa'
-          }])
-        }));
-    } else {
-      methods.forEach(method =>
-        this[method] = (path, {
-          params, data, headers, resType
-        } = {}) => new Promise((resolve, reject) => {
-          const request = superagent[method](formatUrl(path));
-          request.set('Accept', 'application/json');
-          // update superagent, support 'blob' responseType, then we can use Apiclient download pictures or reports
-          if (resType) {
-            request.responseType(resType);
+    const urlHandler = isWindow ? formatUrl : nodeUrl;
+
+    methods.forEach((method) => {
+      this[method] = (path, {
+        params, data, headers, resType
+      } = {}) => new Promise((resolve, reject) => {
+        const request = superagent[method](urlHandler(path));
+        request.set('Accept', 'application/json');
+        if (resType) {
+          request.responseType(resType);
+        }
+        if (params) {
+          request.query(params);
+        }
+
+        if (headers) {
+          request.set(headers);
+        }
+
+        if (data) {
+          request.send(data);
+        }
+
+        request.end((err, res) => {
+          if (err) {
+            reject(res || err);
+          } else if (res.body) {
+            resolve(res.body);
+          } else {
+            resolve(res.xhr);
           }
-          if (params) {
-            request.query(params);
-          }
-
-          // custom header fields
-          if (headers) {
-            request.set(headers);
-          }
-
-          if (data) {
-            request.send(data);
-          }
-
-          request.end((err, res) => {
-            if (err) {
-              if (resType === 'blob') {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                  const newRes = {
-                    ...res,
-                    body: JSON.parse(reader.result)
-                  };
-                  reject(newRes || err);
-                };
-                reader.readAsText(res.body);
-              } else {
-                reject(res || err);
-              }
-            } else if (res.body) {
-              if (resType && resType === 'blob') {
-                resolve(res);
-              } else {
-                resolve(res.body);
-              }
-            } else {
-              resolve(res.xhr);
-            }
-          });
-        }));
-
-
-    }
+        });
+      });
+    });
   }
 }
 

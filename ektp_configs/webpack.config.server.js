@@ -1,6 +1,8 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const merge = require('webpack-merge');
+const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('./webpack.base.js');
 
 const serverConfig = {
@@ -59,8 +61,25 @@ const serverConfig = {
           },
         }
       ]
+    }, {
+      test: /\.scss$/,
+      use: ['isomorphic-style-loader', {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1,
+          modules: true,
+          localIdentName: '[name]_[local]_[hash:base64:5]'
+        }
+      }, {
+        loader: "sass-loader" // 将 Sass 编译成 CSS
+      }]
     }]
-  }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
+    }),
+  ]
 };
 
 module.exports = merge(config, serverConfig);

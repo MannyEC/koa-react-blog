@@ -9,33 +9,28 @@ import App from '../../ektp_src/routes';
 import { layout } from './layout';
 import getCreateStore from './store';
 
-const getMatch = (routesArray, url) => {
-  return routesArray.some(router => matchPath(url, {
-    path: router.path,
-    exact: router.exact,
-  }));
+const getLoader = (RouterConfigs, url) => {
+  const loader = [];
+  RouterConfigs.forEach((routerConf) => {
+    if (routerConf.path === url) {
+      if (!routerConf.loadData) return false;
+      routerConf.loadData.forEach((item) => {
+        loader.push(item);
+      });
+      // const childLoader = getLoader(routerConf.routes, url);
+    }
+  });
+  return loader;
 };
 
 export const render = async (ctx, next) => {
   const { store, history } = getCreateStore(ctx);
-  // const branch = matchRoutes(router, ctx.req.url);
-  const branch = [];
-  const promises = branch.map(({ route }) => {
-    const fetch = route.component.fetch;
-    return fetch instanceof Function ? fetch(store) : Promise.resolve(null);
-  });
-  const dataLoader = RouterConfigs[0].loadData;
-  console.log('-----------------------')
-  const lf = dataLoader[0]
-  lf(store).catch((err) => {
-    console.log(err)
-  })
-  console.log(lf(store))
 
-  await Promise.all(promises).catch((err) => {
-    console.log(err);
-  });
-  // let isMatch = getMatch(router, ctx.req.url);
+  const loaders = getLoader(RouterConfigs, ctx.req.url);
+  await Promise.all(loaders.map(async (loader) => {
+    const contents = await loader(store);
+  }));
+
   let isMatch = true;
   if (!isMatch) {
     await next();
