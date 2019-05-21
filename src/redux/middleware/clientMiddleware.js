@@ -1,7 +1,4 @@
 import { push } from 'connected-react-router';
-import { LOGOUT_SUCCESS } from 'redux/modules/auth/constants';
-import { loading, loaded } from 'redux/modules/Loading/actions';
-import GlobalTips from 'redux/modules/GlobalTips/constants';
 
 export default function clientMiddleware(client) {
   return ({ dispatch, getState }) =>
@@ -20,23 +17,14 @@ export default function clientMiddleware(client) {
       } else {
         PARAMS_ERROR_TYPE = PARAMS_ERROR;
       }
-      if (!rest.isNotLoading) {
-        next(loading());
-      }
       next({ ...rest, type: REQUEST });
       const actionPromise = promise(client);
       actionPromise
         .then(
           (result) => {
-            if (!rest.isNotLoading) {
-              next(loaded());
-            }
             next({ ...rest, statusCode: 200, result, type: SUCCESS });
           },
           (res) => {
-            if (!rest.isNotLoading) {
-              next(loaded());
-            }
             const error = res.body;
             const { statusCode } = res;
             switch (statusCode) {
@@ -44,20 +32,13 @@ export default function clientMiddleware(client) {
                 next({ ...rest, error, statusCode, type: PARAMS_ERROR_TYPE });
                 break;
               case 401:
-                // next({ ...rest, error, statusCode, type: LOGOUT_SUCCESS });
-                // --------------------
-                //  Go to login page
-                // --------------------
-                dispatch(push('/login'));
                 break;
               case 403:
-                next({ ...rest, error, statusCode, type: GlobalTips.PERMISSION_DENIDE });
                 break;
               case 500:
                 next({ ...rest, error, statusCode, type: FAILURE });
                 break;
               case 501:
-                next({ ...rest, error: error.errors, statusCode, type: GlobalTips.SHOW_ERROR });
                 next({ ...rest, result: error.response, statusCode, type: SUCCESS });
                 break;
               default:

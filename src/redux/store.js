@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import createHistory from 'history/createHashHistory';
-import ApiClient from 'helpers/ApiClient';
+import ApiClient from './ApiClient';
 import clientMiddleware from './middleware/clientMiddleware';
-import simpleFormMiddleware from './middleware/simpleFormMiddleware';
 import createRootReducer from './modules';
 
 export const history = createHistory();
@@ -15,7 +14,6 @@ const enhancers = [];
 const middleware = [
   routerMiddleware(history),
   clientMiddleware(client),
-  simpleFormMiddleware
 ];
 
 if (process.env.NODE_ENV === 'development') {

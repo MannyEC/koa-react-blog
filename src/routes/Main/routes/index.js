@@ -1,21 +1,79 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { ArticleContainer, Article } from './Article';
-import { ArticleListContainer, ArticleList } from './ArticleList';
+import PropTypes from 'prop-types';
+import { compose, bindActionCreators } from 'redux';
+import { hot } from 'react-hot-loader';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import PageAContainer, { pageAReducer, PageAinitLoader } from './PageA';
+import PageBContainer, { pageBReducer } from './PageB';
+import Article, { articleReducer } from './Article';
+import ArticleList, { articleListReducer } from './ArticleList';
 
 export const mainrouterReducer = {
-  ArticleList,
-  Article,
+  ...pageAReducer,
+  ...pageBReducer,
+  ...articleReducer,
+  ...articleListReducer,
 };
 
+export const mainrouterInitLoader = [
+  ...PageAinitLoader
+];
+
+const mapStateToProps = state => ({
+  name: state.auth.name,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {},
+    dispatch
+  );
+
+const renderRoutes = (routes) => {
+  const ret = [];
+  routes.forEach((routeConfig, index) => {
+    ret.push(
+      <Route
+        key={index.toString()}
+        path={routeConfig.path}
+        component={routeConfig.component}
+      />
+    );
+  });
+  return ret;
+};
+
+// 我想routerConfigs也可以向上级传递
+export const RouterConfigs = [{
+  path: '/main/rootA',
+  component: PageAContainer,
+  loadData: PageAinitLoader,
+  routes: []
+}, {
+  path: '/main/rootB',
+  component: PageBContainer,
+  loadData: null,
+  routes: []
+}, {
+  path: '/main/article/:articleId',
+  component: Article,
+  loadData: null,
+  routes: []
+}, {
+  path: '/main/article',
+  component: ArticleList,
+  loadData: null,
+  routes: []
+}];
+
 function MainRoutes(props) {
+  const routeCom = renderRoutes(RouterConfigs);
   return (
     <Switch>
-      <Route path="/main/index" component={ArticleListContainer} />
-      <Route path="/main/article/:articleId" component={ArticleContainer} />
-      <Redirect to="/main/index" />
+      {routeCom}
     </Switch>
   );
 }
-
 export default MainRoutes;

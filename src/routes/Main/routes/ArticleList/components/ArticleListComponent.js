@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Icon } from 'antd';
 import classNames from 'classnames';
-import Progress from 'components/Progress';
 import classes from './ArticleList.scss';
 
 const renderList = (datas) => {
@@ -25,7 +23,7 @@ const renderList = (datas) => {
         </div>
         <div className={classes.articleCardLink}>
           <Link to={`/main/article/${data.filename}`}>
-            <Icon type="right" theme="outlined" />
+            <div type="right" theme="outlined" />
           </Link>
         </div>
       </div>
@@ -35,6 +33,11 @@ const renderList = (datas) => {
 };
 
 class ArticleList extends Component {
+  componentWillMount() {
+    const { loadArticleList } = this.props;
+    loadArticleList();
+  }
+
   render() {
     const { articleList } = this.props;
     const artList = renderList(articleList);

@@ -50,20 +50,20 @@
       }
     },
     "dev:start": {
-      "command": "nodemon --watch ektp_site --exec node \"./ektp_site/bundle.js\"",
+      "command": "nodemon --watch site --exec node \"./site/bundle.js\"",
       "env": {
         "DEBUG": "app:*"
       }
     },
     "build:server": {
-      "command": "webpack --config ./ektp_configs/webpack.config.server.js --watch",
+      "command": "webpack --config ./configs/webpack.config.server.js --watch",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
       }
     },
     "build:client": {
-      "command": "webpack --config ./ektp_configs/webpack.config.client.js --watch",
+      "command": "webpack --config ./configs/webpack.config.client.js --watch",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
