@@ -62,7 +62,7 @@ export const RouterConfigs = [{
   loadData: null,
   routes: []
 }, {
-  path: '/main/article',
+  path: '/main/articleList',
   component: ArticleList,
   loadData: null,
   routes: []

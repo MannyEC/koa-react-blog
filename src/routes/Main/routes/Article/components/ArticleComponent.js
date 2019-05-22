@@ -7,6 +7,10 @@ import classes from './Article.scss';
 import ReactMarkdown from 'react-markdown';
 
 class Article extends Component {
+  componentWillMount() {
+    const { loadArticle, match: { params: { articleId }} } = this.props;
+    loadArticle(articleId)
+  }
   render() {
     const { article } = this.props;
     return (

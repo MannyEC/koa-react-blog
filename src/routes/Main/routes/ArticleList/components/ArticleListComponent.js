@@ -23,7 +23,7 @@ const renderList = (datas) => {
         </div>
         <div className={classes.articleCardLink}>
           <Link to={`/main/article/${data.filename}`}>
-            <div type="right" theme="outlined" />
+            <div>GO</div>
           </Link>
         </div>
       </div>

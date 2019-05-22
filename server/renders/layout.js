@@ -13,6 +13,11 @@ exports.layout = function (content, initState) {
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
     <link href="/main.css" rel="stylesheet">
+    <style type="text/css">
+        body {
+            margin: 0
+        }
+    </style>
     <title>Eckid Blooooooog</title>
 </head>
 
