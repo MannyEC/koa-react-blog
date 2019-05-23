@@ -15,6 +15,8 @@ const getLoader = (RouterConfigs, url) => {
     if (routerConf.path === url) {
       if (!routerConf.loadData) return false;
       routerConf.loadData.forEach((item) => {
+        const { action, parmas } = item;
+        const wrapperAction = (store) => store.dispatch(action())
         loader.push(item);
       });
       // const childLoader = getLoader(routerConf.routes, url);

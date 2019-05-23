@@ -18,9 +18,10 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export const initLoader = [
-  (store) => store.dispatch(loadArticleList())
-];
+export const initLoader = [{
+  action: loadArticleList,
+  params: null,
+}];
 
 export default compose(
   withRouter,

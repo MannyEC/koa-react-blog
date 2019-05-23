@@ -1,14 +1,12 @@
 import React from 'react';
 import MainContainer from './containers/MainContainer';
-import MainRoutes, { mainrouterReducer, mainrouterInitLoader } from './routes';
+import MainRoutes, { mainrouterReducer, RouterConfigs } from './routes';
 
 export const mainReducer = {
   ...mainrouterReducer,
 };
 
-export const mainInitLoader = [
-  ...mainrouterInitLoader,
-];
+export const mainRouterConfigs = RouterConfigs;
 
 const Container = props => (
   <MainContainer>

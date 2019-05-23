@@ -5,7 +5,7 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
-import MainContainer, { mainReducer, mainInitLoader } from './Main';
+import MainContainer, { mainReducer, mainRouterConfigs } from './Main';
 
 export const rootReducer = {
   ...mainReducer,
@@ -37,8 +37,8 @@ const renderRoutes = (routes) => {
 export const RouterConfigs = [{
   path: '/main/:mainKey',
   component: MainContainer,
-  loadData: mainInitLoader,
-  routes: [] // routers 这里要传上来
+  loadData: [],
+  routes: mainRouterConfigs
 }];
 
 class ApplicationContainer extends React.Component {

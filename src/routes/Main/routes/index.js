@@ -8,7 +8,7 @@ import { Route, Switch } from 'react-router-dom';
 import PageAContainer, { pageAReducer, PageAinitLoader } from './PageA';
 import PageBContainer, { pageBReducer } from './PageB';
 import Article, { articleReducer } from './Article';
-import ArticleList, { articleListReducer } from './ArticleList';
+import ArticleList, { articleListReducer, ArticleListInitLoader } from './ArticleList';
 
 export const mainrouterReducer = {
   ...pageAReducer,
@@ -17,9 +17,9 @@ export const mainrouterReducer = {
   ...articleListReducer,
 };
 
-export const mainrouterInitLoader = [
-  ...PageAinitLoader
-];
+// export const mainrouterInitLoader = [
+//   ...PageAinitLoader
+// ];
 
 const mapStateToProps = state => ({
   name: state.auth.name,
@@ -45,7 +45,6 @@ const renderRoutes = (routes) => {
   return ret;
 };
 
-// 我想routerConfigs也可以向上级传递
 export const RouterConfigs = [{
   path: '/main/rootA',
   component: PageAContainer,
@@ -64,7 +63,7 @@ export const RouterConfigs = [{
 }, {
   path: '/main/articleList',
   component: ArticleList,
-  loadData: null,
+  loadData: ArticleListInitLoader,
   routes: []
 }];
 

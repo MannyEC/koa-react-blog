@@ -17,8 +17,12 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   dispatch
 );
 
-export const initLoader = [
-  (store) => store.dispatch(loadPost())
+export const initLoader = [{
+  action: loadPost,
+  params: null,
+}
+
+  // (store) => store.dispatch(loadPost())
 ];
 
 export default compose(
