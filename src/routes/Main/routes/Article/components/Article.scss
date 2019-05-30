@@ -2,4 +2,61 @@
   background-color: #ffffff;
   margin: 50px;
   width: 100%;
+  padding: 20px;
+}
+
+.markdownContainer {
+  font-family: 'Microsoft-YaHei';
+  line-height: 1.6;
+
+  p {
+    font-size: 16px;
+    font-size: 1rem;
+  }
+
+  h1 {
+    border-left: 5px solid #3d7e9a;
+    color: #3d7e9a;
+    padding-left: 20px;
+    font-size: 42px;
+    font-size: 2.33333rem;
+  }
+
+  h2 {
+
+  }
+
+  h3 {
+
+  }
+
+  h4 {
+
+  }
+
+  hr {
+    height: 3px;
+    background: #3d7e9a;
+  }
+
+  pre {
+    color: #333;
+    text-shadow: none;
+    background: #eee;
+    border-left: 5px solid #3d7e9a;
+    font-size: 18px;
+    font-size: 1rem;
+    font-family: consolas,monaco,"Andale Mono",monospace;
+    padding: 15px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  li {
+    margin-bottom: 6px;
+    font-size: 12px;
+    padding: 2px 5px;
+    width: max-content;
+    background-color: rgba(220,220,220,.5);
+  }
 }

@@ -6,7 +6,6 @@ const fs = require('fs');
 const path = require('path');
 const Router = require('koa-router');
 const staticServer = require('koa-static');
-const filePath = path.resolve('./src/posts');
 const index = require('./routes/index');
 const apiserver = require('./Api/api').default;
 

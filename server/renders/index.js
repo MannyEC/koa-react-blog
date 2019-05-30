@@ -10,16 +10,19 @@ import { layout } from './layout';
 import getCreateStore from './store';
 
 const getLoader = (RouterConfigs, url) => {
-  const loader = [];
+  let loader = [];
   RouterConfigs.forEach((routerConf) => {
+    if (routerConf.routes) {
+      const tmpLoader = getLoader(routerConf.routes, url)
+      loader = loader.concat(tmpLoader);
+    }
     if (routerConf.path === url) {
       if (!routerConf.loadData) return false;
       routerConf.loadData.forEach((item) => {
-        const { action, parmas } = item;
-        const wrapperAction = (store) => store.dispatch(action())
-        loader.push(item);
+        const { action, params } = item;
+        const wrappedAction = (store) => store.dispatch(action())
+        loader.push(wrappedAction);
       });
-      // const childLoader = getLoader(routerConf.routes, url);
     }
   });
   return loader;
@@ -29,9 +32,9 @@ export const render = async (ctx, next) => {
   const { store, history } = getCreateStore(ctx);
 
   const loaders = getLoader(RouterConfigs, ctx.req.url);
-  // await Promise.all(loaders.map(async (loader) => {
-  //   const contents = await loader(store);
-  // }));
+  await Promise.all(loaders.map(async (loader) => {
+    const contents = await loader(store);
+  }));
 
   let isMatch = true;
   if (!isMatch) {

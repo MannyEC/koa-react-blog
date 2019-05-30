@@ -20,10 +20,12 @@
   padding: 40px 20px;
   align-items: center;
   border: 1px solid;
+  flex-grow: 0;
 }
 
 .expandMenu {
-  padding-top: 25px;
+  padding-top: 10px;
+  width: 100%;
 }
 
 .expandMenuHeaderBar {
@@ -47,6 +49,11 @@
 .expandMenuContent {
   display: flex;
   flex-wrap: wrap;
+}
+
+.subMenuItem:hover {
+  color: #fff;
+  background: burlywood;
 }
 
 .pageContent {

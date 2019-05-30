@@ -2,7 +2,8 @@ import ActionTypes from './constants';
 
 export function loadArticleList() {
   return (dispatch, getState) => {
-    dispatch({
+    // it's necessary to return dispath
+    return dispatch({
       types: [
         ActionTypes.ARTICLE_LIST_LOAD,
         ActionTypes.ARTICLE_LIST_LOAD_SUCCESS,

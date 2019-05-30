@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Row, Col, Spin, notification, Badge, Avatar } from 'antd';
 import classNames from 'classnames';
 
 import classes from './Main.scss';
@@ -27,9 +26,6 @@ const menuList = [{
   label: 'blog',
   value: 'blog',
   children: [{
-    label: '前端',
-    value: 'frontend',
-  }, {
     label: 'JavaScript',
     value: 'js',
   }, {
@@ -43,27 +39,20 @@ const menuList = [{
     value: 'react',
   }, {
     label: 'algorithm',
-    value: 'genres',
+    value: 'algorithm',
   }, {
     label: 'others',
     value: 'others',
   }]
 }, {
   label: 'Life',
-  value: 'think',
+  value: 'life',
   children: [{
-    label: '杂谈',
-    value: 'genres',
+    label: '闲谈',
+    value: 'essay',
   }, {
-    label: '译文',
-    value: 'genres',
-  }]
-}, {
-  label: 'About',
-  value: 'about',
-  children: [{
-    label: '关于我',
-    value: 'genres',
+    label: 'About Me',
+    value: 'me',
   }]
 }];
 
@@ -71,18 +60,23 @@ class ExpandMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openStatus: true,
       selectIndex: 0,
     };
+    this.onHeaderClick = this.onHeaderClick.bind(this);
+    this.onHeaderSubItemClick = this.onHeaderSubItemClick.bind(this);
+    this.renderMenu = this.renderMenu.bind(this);
   }
 
-  onHeaderClick(idx) {
-    const { selectIndex, openStatus } = this.state;
-    if (selectIndex === idx) {
-      this.setState({ openStatus: !openStatus });
-    } else {
-      this.setState({ selectIndex: idx, openStatus: true });
-    }
+  onHeaderClick(idx, value) {
+    const { history: { push } } = this.props;
+    this.setState({ selectIndex: idx });
+    push(`/main/articleList/${value}`);
+  }
+
+  onHeaderSubItemClick(subval) {
+    const { selectIndex } = this.state;
+    const { history: { push } } = this.props;
+    push(`/main/articleList/${menuList[selectIndex].value}/${subval}`);
   }
 
   renderMenu(configs) {
@@ -99,7 +93,10 @@ class ExpandMenu extends Component {
             [classes.expandMenuBarItemSelected]: selectIndex === index,
           })}
         >
-          <a className={classes.menuText} onClick={() => this.onHeaderClick(index)}>
+          <a
+            className={classes.menuText}
+            onClick={() => this.onHeaderClick(index, item.value)}
+          >
             {item.label}
           </a>
         </div>
@@ -109,7 +106,14 @@ class ExpandMenu extends Component {
       const tmpMenuItem = [];
       children.forEach((sub, idx) => {
         tmpMenuItem.push(
-          <div key={idx.toString()} style={colorfulStyle(idx)}>{sub.label}</div>
+          <div
+            key={idx.toString()}
+            style={colorfulStyle(idx)}
+            className={classes.subMenuItem}
+            onClick={() => this.onHeaderSubItemClick(sub.value)}
+          >
+            {sub.label}
+          </div>
         );
       });
       subSection.push(tmpMenuItem);
@@ -122,25 +126,22 @@ class ExpandMenu extends Component {
   }
 
   render() {
-    const { openStatus, selectIndex } = this.state;
+    const { selectIndex } = this.state;
     const menus = this.renderMenu(menuList);
     return (
       <div className={classes.expandMenu}>
         <div className={classes.expandMenuHeaderBar}>
           {menus.headerSection}
         </div>
-        {openStatus && (
-          <div className={classes.expandMenuContent}>
-            {menus.subSection[selectIndex]}
-          </div>
-        )}
+        <div className={classes.expandMenuContent}>
+          {menus.subSection[selectIndex]}
+        </div>
       </div>
     );
   }
 }
 
 export default class Main extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -152,8 +153,8 @@ export default class Main extends Component {
       <div className={classes.container}>
         <header className={classes.header}>
           <div className={classes.logo}>eckid</div>
-          <div>
-            <ExpandMenu />
+          <div className={classes.expandMenu}>
+            <ExpandMenu {...this.props} />
           </div>
         </header>
         <div className={classes.pageContent}>

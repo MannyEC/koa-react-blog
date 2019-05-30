@@ -11,7 +11,8 @@ exports.layout = function (content, initState) {
   <link href="/main.css" rel="stylesheet">
   <style type="text/css">
     body {
-      margin: 0
+      margin: 0;
+      background: #222c35;
     }
   </style>
   <title>Eckid Blooooooog</title>

@@ -7,13 +7,12 @@ import Main from '../components/Main';
 const mapStateToProps = state => ({
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      push,
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    pushState: push,
+  },
+  dispatch
+);
 
 export default compose(
   withRouter,
