@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-
 import classes from './Main.scss';
 
 const colorfulStyle = (index) => {
@@ -32,6 +31,9 @@ const menuList = [{
     label: 'CSS',
     value: 'css',
   }, {
+    label: 'HTML',
+    value: 'HTML',
+  }, {
     label: 'Python',
     value: 'python',
   }, {
@@ -42,7 +44,7 @@ const menuList = [{
     value: 'algorithm',
   }, {
     label: 'others',
-    value: 'others',
+    value: 'other',
   }]
 }, {
   label: 'Life',

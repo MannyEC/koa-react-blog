@@ -2,12 +2,9 @@
 layout:     post
 title:      Apache 多处理模块
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-09-28
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Apache
+tags:       other
 ---
 
 # Apache MPMs

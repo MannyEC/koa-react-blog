@@ -2,13 +2,9 @@
 layout:     post
 title:      Array.prototype.map()学习
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-03-06
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- JavaScript
-
+tags:       js
 ---
 
 # Array.prototype.map()学习

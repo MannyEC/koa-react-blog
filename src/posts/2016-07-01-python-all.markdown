@@ -2,13 +2,9 @@
 layout:     post
 title:      Python中__all__的作用
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-07-01
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Python
-
+tags:       python
 ---
 在使用Python来定义module和包的时候，都需要考虑模块被使用时，会导入的模块属性。
 

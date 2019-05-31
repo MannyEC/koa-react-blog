@@ -2,13 +2,9 @@
 layout:     post
 title:      Ubuntu下hping3安装
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-08-12
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- hping
-
+tags:       other
 ---
 # Ubuntu下hping3安装
 

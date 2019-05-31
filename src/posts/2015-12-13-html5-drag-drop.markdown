@@ -1,13 +1,11 @@
 ---
 layout:     post
-title:      "HTML5拖放 drag &amp; drop"
+title:      HTML5拖放 drag & drop
 subtitle:   
-class:		"note"
+type:       blog
 date:       2015-12-13 
-author:     "eckid"
-header-img: "img/practice-bg.jpg"
-tags:
-    - HTML5
+tags:       HTML
+descript:   HTML5拖放 drag & drop
 ---
 
 # HTML5拖放 drag & drop

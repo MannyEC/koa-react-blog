@@ -2,14 +2,9 @@
 layout:     post
 title:      Django REST framework API： Requests
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-08-12
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-- 译文
-
+tags:       python
 ---
 # Requests
 

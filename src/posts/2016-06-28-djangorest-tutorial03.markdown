@@ -2,14 +2,9 @@
 layout:     post
 title:      Django REST framework 教程3 Class Based Views
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-06-28
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-- 译文
-
+tags:       python
 ---
 API views也可以使用class based views来编写，而不是function based views。你会发现这是一种很有效的模式，能够让我们复用代码，保持代码[DRY](http://en.wikipedia.org/wiki/Don't_repeat_yourself)。
 

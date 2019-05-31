@@ -2,14 +2,9 @@
 layout:     post
 title:      Django REST framework 教程5 关联性与 Hyperlinked APIs
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-06-29
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-- 译文
-
+tags:       python
 ---
 # Tutorial 5: 关联性与 Hyperlinked APIs
 

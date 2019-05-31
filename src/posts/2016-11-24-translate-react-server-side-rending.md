@@ -2,14 +2,9 @@
 layout:     post
 title:      服务端渲染 React 组件 [译]
 subtitle:   Rendering React Components on the Server
-class:      "note"
+type:       blog
 date:       2016-11-24 
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- React
-- 译文
-
+tags:       react
 ---
 
 # 服务端渲染 React 组件

@@ -12,6 +12,14 @@
   p {
     font-size: 16px;
     font-size: 1rem;
+
+    code {
+      padding: 2px 4px;
+      font-size: 90%;
+      color: #c7254e;
+      background-color: #f9f2f4;
+      border-radius: 4px;
+    }
   }
 
   h1 {
@@ -58,5 +66,9 @@
     padding: 2px 5px;
     width: max-content;
     background-color: rgba(220,220,220,.5);
+  }
+
+  img {
+    max-width: 100%;
   }
 }

@@ -1,13 +1,11 @@
 ---
 layout:     post
-title:      "web worker基础"
+title:      web worker基础
 subtitle:   
-class:		"note"
+type:       blog
 date:       2015-12-10 
-author:     "eckid"
-header-img: "img/practice-bg.jpg"
-tags:
-    - HTML5
+tags:       js
+descript:
 ---
 
 # web worker基础

@@ -2,13 +2,9 @@
 layout:     post
 title:      使用 HTML5 原生 Drag & Drop API [译]
 subtitle:   Using HTML5’s Native Drag and Drop API
-class:      "note"
+type:       blog
 date:       2016-03-05 
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- HTML5
-- 译文
+tags:        HTML
 
 ---
 

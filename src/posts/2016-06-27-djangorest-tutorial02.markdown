@@ -2,14 +2,9 @@
 layout:     post
 title:      Django REST framework 教程2 Requests and Responses
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-06-27
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-- 译文
-
+tags:       python
 ---
 
 # Tutorial 2: Requests and Responses

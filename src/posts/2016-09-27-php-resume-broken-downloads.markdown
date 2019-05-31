@@ -2,13 +2,9 @@
 layout:     post
 title:      PHP 断点续传
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-09-27
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- PHP
-
+tags:       other
 ---
 
 # PHP 断点续传

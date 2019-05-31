@@ -2,14 +2,9 @@
 layout:     post
 title:      Django REST framework API：Views
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-12-08
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-- 译文
-
+tags:       python
 ---
 
 [原文](http://www.django-rest-framework.org/api-guide/views/)

@@ -1,21 +1,18 @@
 ---
 layout:     post
-title:      "<progress><meter>标签"
+title:      <progress><meter>标签
 subtitle:   
-class:		"note"
-date:       2015-12-10 
-author:     "eckid"
-header-img: "img/practice-bg.jpg"
-tags:
-    - HTML5标签
-descript:   "介绍HTML5<progress><meter>标签的用法"
+type:       blog
+date:       2015-12-10
+tags:       HTML
+descript:   介绍HTML5<progress><meter>标签的用法
 ---
 
 # `<progress><meter>`标签 JS控制
 
 #### `<progress>`标签用于定义运行中的进度（进程）
 
-#### `<meter>`标签用来表示度量		
+#### `<meter>`标签用来表示度量
 
 ### 用法示例
 	<p>当前进度为:<progress max="100"><span id="progress">0</span>%</progress></p>

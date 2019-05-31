@@ -1,6 +1,11 @@
 import ActionTypes from './constants';
 
-export function loadArticleList() {
+export function loadArticleList(postType, postTag) {
+  const params = {
+    postTag,
+    postType,
+  };
+
   return (dispatch, getState) => {
     // it's necessary to return dispath
     return dispatch({
@@ -10,7 +15,7 @@ export function loadArticleList() {
         ActionTypes.ARTICLE_LIST_LOAD_FAILED,
         ActionTypes.ARTICLE_LIST_LOAD_PARAMS_ERROR
       ],
-      promise: client => client.get('/posts'),
+      promise: client => client.get('/posts', { params }),
     });
   };
 }

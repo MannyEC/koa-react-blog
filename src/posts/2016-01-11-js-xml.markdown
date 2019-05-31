@@ -2,12 +2,9 @@
 layout:     post
 title:      Js获取和操纵XML简介
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-01-11 
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-    - JavaScript
+tags:       js
 ---
 
 # Js获取和操纵XML简介

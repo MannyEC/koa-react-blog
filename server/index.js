@@ -22,6 +22,8 @@ app
   .use(router.allowedMethods());
 
 app.use(staticServer('./site'));
+app.use(staticServer('./src/static'));
+
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx);
 });

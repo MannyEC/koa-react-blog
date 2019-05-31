@@ -2,14 +2,9 @@
 layout:     post
 title:      Django REST framework 介绍
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-06-26
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-- 译文
-
+tags:        python
 ---
 ![logo](/img/restlogo.png)
 

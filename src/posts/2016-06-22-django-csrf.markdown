@@ -2,13 +2,9 @@
 layout:     post
 title:      Django csrf
 subtitle:   
-class:		"note"
+type:       blog
 date:       2016-06-22
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- Django
-
+tags:       python
 ---
 # Django csrf
 

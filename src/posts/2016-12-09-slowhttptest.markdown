@@ -2,13 +2,9 @@
 layout:     post
 title:      SlowHTTPtest 慢速连接攻击及解决
 subtitle:   
-class:      "note"
+type:       blog
 date:       2016-12-09
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- DDos
-
+tags:       other
 ---
 
 # SlowHTTPtest 慢速连接攻击及解决

@@ -2,12 +2,9 @@
 layout:     post
 title:      easel.js移动捕捉实例
 subtitle:   
-class:		"practice"
+type:       blog
 date:       2015-12-28 
-author:     "eckid"
-header-img: "img/practice-bg.jpg"
-tags:
-    - HTML5
+tags:       HTML
 ---
 
 # easel.js移动捕捉实例

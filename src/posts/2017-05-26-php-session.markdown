@@ -2,13 +2,9 @@
 layout:     post
 title:      PHP session 机制
 subtitle:   
-class:      "note"
+type:       blog
 date:       2017-05-26
-author:     "eckid"
-header-img: "img/note-bg.jpg"
-tags:
-- PHP
-
+tags:       other
 ---
 
 **起因**：最近发现了产品日志记录中，logout日志存在记录Username为空的现象，由于Username从session中获取，首先怀疑的是session过期导致，由此引发了以下对PHP session和浏览器session信息清除机制的研究。

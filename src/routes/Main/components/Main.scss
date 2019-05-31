@@ -1,6 +1,7 @@
 .container {
+  max-width: 1200px;
+  margin: auto;
   background: rgb(34, 44, 53);
-  width: 100%;
   font-family: 'Microsoft-YaHei';
   padding-bottom: 50px;
 }
@@ -58,14 +59,13 @@
 
 .pageContent {
   display: flex;
-  margin-left: 80px;
+  margin-left: 20px;
 }
 
 .navSection {
   width: 200px;
   margin-right: 100px;
   margin-top: 100px;
-
 }
 
 .navSectionAll {
