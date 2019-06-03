@@ -1,18 +1,19 @@
 .articleList {
   margin-top: 30px;
+  width: 90%;
+  max-width: 900px;
 }
 
 .articleCard {
   display: flex;
-  background-color: #fffcf6;
-  height: 200px;
+  background-color: #ffffff;
+  height: 150px;
   margin: 25px auto;
-  width: 900px;
 }
 
 .articleCardLink {
   background: #c9cfd2;
-  width: 10%;
+  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,8 +34,8 @@
 
 .articleCardHeader {
   height: 50px;
-  line-height: 50px;
-  font-size: 20px;
+  line-height: 2em;
+  font-size: 1em;
   font-family: Microsoft-YaHei;
   font-weight: 800;
   color: black;
@@ -43,7 +44,7 @@
 .articleCardContent {
   font-size: 15px;
   color: #000;
-  height: 100px;
+  height: 50px;
 }
 
 .articleCardTime {

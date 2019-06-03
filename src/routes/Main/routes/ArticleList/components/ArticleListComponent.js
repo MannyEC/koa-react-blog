@@ -41,7 +41,7 @@ class ArticleList extends Component {
   }
 
   componentWillReceiveProps(nextProp) {
-    if (nextProp.location.pathname !== this.props.pathname) {
+    if (nextProp.location.pathname !== this.props.location.pathname) {
       this.loadData(nextProp.location.pathname);
     }
   }
