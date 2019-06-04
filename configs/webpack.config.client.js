@@ -1,7 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const debug = require('debug');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 // const config = require('../config');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -10,13 +11,14 @@ const newDebug = debug('app:webpack:config');
 
 newDebug('Create configuration.');
 const webpackConfig = {
-  mode: 'development',
+  mode: 'production',
   name: 'client',
   target: 'web',
   resolve: {
     modules: [path.resolve(__dirname, '../src'), 'node_modules'],
     extensions: ['.js', '.jsx', '.json']
   },
+  devtool: false,
   module: {}
 };
 // ------------------------------------
@@ -31,14 +33,14 @@ webpackConfig.entry = {
   'babel-polyfill': '@babel/polyfill',
   'react': 'react',
   'react-dom': 'react-dom',
-  app: APP_ENTRY_PATHS
+  app: APP_ENTRY_PATHS,
 };
 
 // ------------------------------------
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-  filename: `[name].[aaa].js`,
+  filename: '[name].eckidecho.js',
   path: path.resolve(__dirname, '../site'),
   // publicPath: config.compiler_public_path,
   globalObject: 'this'
@@ -48,27 +50,7 @@ webpackConfig.output = {
 // Plugins
 // ------------------------------------
 webpackConfig.plugins = [
-  // new webpack.DefinePlugin(config.globals),
-  // new HtmlWebpackPlugin({
-  //   template: paths.client('index.html'),
-  //   hash: false,
-  //   favicon: paths.client('static/favicon.ico'),
-  //   filename: 'index.html',
-  //   inject: 'body',
-  //   chunksSortMode: 'dependency',
-  //   minify: {
-  //     removeComments: true,
-  //     collapseWhitespace: true,
-  //     removeRedundantAttributes: true,
-  //     useShortDoctype: true,
-  //     removeEmptyAttributes: true,
-  //     removeStyleLinkTypeAttributes: true,
-  //     keepClosingSlash: true,
-  //     minifyJS: true,
-  //     minifyCSS: true,
-  //     minifyURLs: true,
-  //   }
-  // })
+  // new BundleAnalyzerPlugin(),
 ];
 
 // ------------------------------------
@@ -82,17 +64,9 @@ const PATHS_TO_TREAT_AS_CSS_MODULES = [
   // 'react-toolbox', (example)
 ];
 
-// If config has CSS modules enabled, treat this project's styles as CSS modules.
-// if (config.compiler_css_modules) {
-//   PATHS_TO_TREAT_AS_CSS_MODULES
-//     .push(paths.client().replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, '\\$&')); // eslint-disable-line
-// }
-
 const isUsingCSSModules = !!PATHS_TO_TREAT_AS_CSS_MODULES.length;
-// const cssModulesRegex = new RegExp(`(${PATHS_TO_TREAT_AS_CSS_MODULES.join('|')})`);
+
 const cssModulesRegex = [];
-// Loaders for files that should not be treated as CSS modules.
-const excludeCSSModules = isUsingCSSModules ? cssModulesRegex : false;
 
 webpackConfig.module.rules = [{
   test: /\.(js|jsx)$/,
@@ -139,7 +113,6 @@ webpackConfig.module.rules = [{
   ]
 }, {
   test: /\.scss$/,
-  // exclude: excludeCSSModules,
   use: [
     { loader: 'style-loader' },
     {
@@ -155,7 +128,6 @@ webpackConfig.module.rules = [{
       options: {
         ident: 'postcss',
         plugins: [
-          // require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
         ]
       }
     },
@@ -163,7 +135,6 @@ webpackConfig.module.rules = [{
   ]
 }, {
   test: /\.css$/,
-  // exclude: excludeCSSModules,
   use: [
     { loader: 'style-loader' },
     {
@@ -177,7 +148,7 @@ webpackConfig.module.rules = [{
       options: {
         ident: 'postcss',
         plugins: [
-          require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
+          require('autoprefixer')({ broswer: 'last 5 versions' }),
         ]
       }
     }
@@ -205,15 +176,13 @@ webpackConfig.module.rules = [{
   loader: 'url-loader?limit=8192'
 }];
 
-// Don't split bundles during testing, since we only want import one bundle
-
 webpackConfig.optimization = {
   splitChunks: {
     chunks: 'all',
     name: 'vendor',
-  }
+  },
+  minimize: true
 };
-
 
 if (isUsingCSSModules) {
   const getCssModulesLoader = importLoaders => ({
@@ -236,7 +205,7 @@ if (isUsingCSSModules) {
         options: {
           ident: 'postcss',
           plugins: [
-            require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
+            require('autoprefixer')({ broswer: 'last 5 versions' }),
           ]
         }
       },
@@ -253,7 +222,7 @@ if (isUsingCSSModules) {
         options: {
           ident: 'postcss',
           plugins: [
-            require('autoprefixer')({ broswer: 'last 5 versions' }), // 处理CSS前缀问题，自动添加前缀
+            require('autoprefixer')({ broswer: 'last 5 versions' }),
           ]
         }
       }
@@ -265,6 +234,14 @@ webpackConfig.plugins.push(
   new MiniCssExtractPlugin({
     filename: '[name].[contenthash].css'
   }),
+  new CompressionWebpackPlugin({
+    filename: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: new RegExp('\\.(js|css)$'),
+    threshold: 10240,
+    minRatio: 0.8,
+    deleteOriginalAssets: true
+  })
 );
 
 module.exports = webpackConfig;

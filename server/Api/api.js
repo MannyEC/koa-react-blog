@@ -66,7 +66,9 @@ const apiserver = (router) => {
         resolve();
       })
     });
-    ctx.body = ret;
+    ctx.body = {
+      data: ret
+    };
   });
 }
 

@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import PageAContainer, { pageAReducer, PageAinitLoader } from './PageA';
 import PageBContainer, { pageBReducer } from './PageB';
-import Article, { articleReducer } from './Article';
+import Article, { articleReducer, ArticleInitLoader } from './Article';
 import ArticleList, { articleListReducer, ArticleListInitLoader } from './ArticleList';
 
 export const mainrouterReducer = {
@@ -16,10 +16,6 @@ export const mainrouterReducer = {
   ...articleReducer,
   ...articleListReducer,
 };
-
-// export const mainrouterInitLoader = [
-//   ...PageAinitLoader
-// ];
 
 const mapStateToProps = state => ({
   name: state.auth.name,
@@ -58,7 +54,7 @@ export const RouterConfigs = [{
 }, {
   path: '/main/article/:articleId',
   component: Article,
-  loadData: null,
+  loadData: ArticleInitLoader,
   routes: []
 }, {
   path: '/main/articleList',

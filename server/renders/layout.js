@@ -20,13 +20,13 @@ exports.layout = function (content, initState) {
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"> ${content}</div>
+  <div id="root">${content}</div>
   <script>window.__INITIAL_STATE__ =${JSON.stringify(initState)}</script>
-  <script type="text/javascript" src="/babel-polyfill.[aaa].js"></script>
-  <script type="text/javascript" src="/react.[aaa].js"></script>
-  <script type="text/javascript" src="/react-dom.[aaa].js"></script>
-  <script type="text/javascript" src="/vendor.[aaa].js"></script>
-  <script type="text/javascript" src="/app.[aaa].js"></script>
+  <script type="text/javascript" src="/babel-polyfill.eckidecho.js"></script>
+  <script type="text/javascript" src="/react.eckidecho.js"></script>
+  <script type="text/javascript" src="/react-dom.eckidecho.js"></script>
+  <script type="text/javascript" src="/vendor.eckidecho.js"></script>
+  <script type="text/javascript" src="/app.eckidecho.js"></script>
 </body>
 
 </html>

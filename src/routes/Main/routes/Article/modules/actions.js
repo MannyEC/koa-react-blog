@@ -2,7 +2,7 @@ import ActionTypes from './constants';
 
 export function loadArticle(name) {
   return (dispatch, getState) => {
-    dispatch({
+    return dispatch({
       types: [
         ActionTypes.ARTICLE_LOAD,
         ActionTypes.ARTICLE_LOAD_SUCCESS,
@@ -10,6 +10,6 @@ export function loadArticle(name) {
         ActionTypes.ARTICLE_LOAD_PARAMS_ERROR
       ],
       promise: client => client.get(`/post/${name}`),
-    });
+    })
   };
 }

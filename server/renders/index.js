@@ -3,11 +3,38 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { matchRoutes, renderRoutes } from 'react-router-config';
-import { matchPath } from 'react-router-dom';
 import { RouterConfigs } from '../../src/routes';
 import App from '../../src/routes';
 import { layout } from './layout';
 import getCreateStore from './store';
+
+const isUrlParams = (routeStr) => {
+  if (!routeStr) return false;
+  return (routeStr[0] === ':')
+}
+
+const matchPath = (pathStr, url) => {
+  const pathList = pathStr.split('/');
+  const urlList = url.split('/');
+  const maxLen = pathList.length > urlList.length ? pathList.length : urlList.length;
+
+  let isMatched = true;
+
+  pathList.map((pathItem, index) => {
+    if (!isUrlParams(pathItem)) {
+      if (index < urlList.length) {
+        // not exceed url
+        if (pathItem !== urlList[index]) {
+          isMatched = false;
+        }
+      } else {
+        // exceed url
+        isMatched = false;
+      }
+    }
+  })
+  return isMatched;
+}
 
 const getLoader = (RouterConfigs, url) => {
   let loader = [];
@@ -16,11 +43,20 @@ const getLoader = (RouterConfigs, url) => {
       const tmpLoader = getLoader(routerConf.routes, url)
       loader = loader.concat(tmpLoader);
     }
-    if (routerConf.path === url) {
+    if (matchPath(routerConf.path, url)) {
       if (!routerConf.loadData) return false;
       routerConf.loadData.forEach((item) => {
-        const { action, params } = item;
-        const wrappedAction = (store) => store.dispatch(action())
+        const { action, getParams } = item;
+
+        const wrappedAction = (store) => {
+          const requestParams = getParams(store);
+          if (requestParams) {
+            return store.dispatch(action.apply(null, requestParams));
+            
+          } else {
+            return store.dispatch(action());
+          }
+        }
         loader.push(wrappedAction);
       });
     }
@@ -30,7 +66,6 @@ const getLoader = (RouterConfigs, url) => {
 
 export const render = async (ctx, next) => {
   const { store, history } = getCreateStore(ctx);
-
   const loaders = getLoader(RouterConfigs, ctx.req.url);
   await Promise.all(loaders.map(async (loader) => {
     const contents = await loader(store);

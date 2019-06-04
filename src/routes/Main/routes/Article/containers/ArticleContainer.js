@@ -19,6 +19,14 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+export const initLoader = [{
+  action: loadArticle,
+  getParams: (store) => {
+    const pathname = store.getState().router.location.pathname.split('/');
+    return [pathname[pathname.length - 1]];
+  }, // pathname is same with url params
+}];
+
 export default compose(
   withRouter,
   // asyncProvider({

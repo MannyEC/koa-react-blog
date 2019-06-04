@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch =>
 
 export const initLoader = [{
   action: loadArticleList,
-  params: null,
+  getParams: null,
 }];
 
 export default compose(

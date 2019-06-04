@@ -9,7 +9,7 @@ export default function reducer(state = initialState, action = {}) {
     case ActionTypes.ARTICLE_LOAD_SUCCESS:
       return {
         ...state,
-        article: action.result.response,
+        article: action.result.data,
       };
     default:
       return state;
