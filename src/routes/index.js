@@ -4,7 +4,7 @@ import { compose, bindActionCreators } from 'redux';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import MainContainer, { mainReducer, mainRouterConfigs } from './Main';
 
 export const rootReducer = {
@@ -50,6 +50,7 @@ class ApplicationContainer extends React.Component {
     const routeCom = renderRoutes(RouterConfigs);
     return (
       <Switch>
+        <Route exact path="/" render={() => <Redirect to="/main/articleList" />} />
         {routeCom}
       </Switch>
     );

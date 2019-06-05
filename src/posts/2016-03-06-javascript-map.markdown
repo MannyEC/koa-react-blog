@@ -19,25 +19,22 @@ tags:       js
 
 ## 然而下面这道题：
 
-<pre>
-What is the result of this expression? (or multiple ones)
+	What is the result of this expression? (or multiple ones)
 
-["1", "2", "3"].map(parseInt)
+	["1", "2", "3"].map(parseInt)
 
-答案为 [1, NaN, NaN]
-</pre>
+	答案为 [1, NaN, NaN]
 
 这是因为map()在执行过程中并不是只给callback传入一个参数，而是自动传入三个参数：数组元素currentValue，元素索引index，原数组本身Array。
 
 所以当题目中的callback函数为parseInt时，它需要两个参数，第一个为需转换的值，第二个为进制数。所以map()传入的三个值中前两个将被使用，第三个将被抛弃。于是有了这种情况：
-<pre>
-parseInt("1", 0);
-//1
-parseInt("2", 1);
-//NaN
-parseInt("3", 2);
-//NaN
-</pre>
+
+	parseInt("1", 0);
+	//1
+	parseInt("2", 1);
+	//NaN
+	parseInt("3", 2);
+	//NaN
 
 ## 其他值得注意的有：
 

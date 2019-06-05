@@ -7,6 +7,7 @@ import ArticleList from '../components/ArticleListComponent';
 
 const mapStateToProps = state => ({
   articleList: state.ArticleList.articleList,
+  count: state.ArticleList.count,
 });
 
 const mapDispatchToProps = dispatch =>

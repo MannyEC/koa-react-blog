@@ -22,12 +22,10 @@ Content-Range用于响应头，表示整个资源中实体表示的字节范围�
 
 请求下载整个文件: 
 
-<pre>
-GET  /test.rar  HTTP/1.1
-Connection:  close
-Host:  116.1.219.219
-Range:  bytes=0-100
-</pre>
+    GET  /test.rar  HTTP/1.1
+    Connection:  close
+    Host:  116.1.219.219
+    Range:  bytes=0-100
 
 Range头域可以请求实体的一个或者多个子范围，Range的值为0表示第一个字节，也就是Range计算字节数是从0开始的
 
@@ -47,51 +45,49 @@ Range头域可以请求实体的一个或者多个子范围，Range的值为0表
 
 ## PHP断点续传
 
-<pre>
-function resumeBrokenDownloads($filePath) {
-    set_time_limit(0);
-    ini_set('memory_limit','1024M');
+    function resumeBrokenDownloads($filePath) {
+        set_time_limit(0);
+        ini_set('memory_limit','1024M');
 
-    if(!is_file($filePath)){
-    	die("<b>404 File not found!</b>");
-    }
+        if(!is_file($filePath)){
+        	die("<b>404 File not found!</b>");
+        }
 
-    $filename = basename($filePath);
-    header("Cache-Control: public");
-    header("Content-Type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=".$filename);
-    header("Content-Transfer-Encoding: binary");
-    header("Accept-Ranges: bytes");
-    $size = filesize($filePath);
-    $range=0;
+        $filename = basename($filePath);
+        header("Cache-Control: public");
+        header("Content-Type: application/octet-stream");
+        header("Content-Disposition: attachment; filename=".$filename);
+        header("Content-Transfer-Encoding: binary");
+        header("Accept-Ranges: bytes");
+        $size = filesize($filePath);
+        $range=0;
 
-    if (isset($_SERVER['HTTP_RANGE'])){
-        list($a,$range) = explode("=",$_SERVER['HTTP_RANGE']);
-        $size2 = $size - 1;
-        $new_length = $size2 - $range;
-        header("HTTP/1.1 206 Partial Content");
-        header("Content-Length: {$new_length}");
-        header("Content-Range: bytes {$range}-{$size2}/{$size}");
-    }else{
-        $size2 = $size - 1;
-        header("Content-Range: bytes 0-{$size2}/{$size}");
-        header("Content-Length:".$size);
-    }
+        if (isset($_SERVER['HTTP_RANGE'])){
+            list($a,$range) = explode("=",$_SERVER['HTTP_RANGE']);
+            $size2 = $size - 1;
+            $new_length = $size2 - $range;
+            header("HTTP/1.1 206 Partial Content");
+            header("Content-Length: {$new_length}");
+            header("Content-Range: bytes {$range}-{$size2}/{$size}");
+        }else{
+            $size2 = $size - 1;
+            header("Content-Range: bytes 0-{$size2}/{$size}");
+            header("Content-Length:".$size);
+        }
 
-    $fp = fopen("{$filePath}", "rb" );
-    fseek($fp, $range);
-        
-    ob_clean();
-    flush();
-    while(!feof($fp)){
-        print(fread($fp,1024*8));
-        ob_flush();
+        $fp = fopen("{$filePath}", "rb" );
+        fseek($fp, $range);
+            
+        ob_clean();
         flush();
+        while(!feof($fp)){
+            print(fread($fp,1024*8));
+            ob_flush();
+            flush();
+        }
+        fclose($fp);
+        exit();
     }
-    fclose($fp);
-    exit();
-}
-</pre>
 
 ## flush()与 ob_flush()
 

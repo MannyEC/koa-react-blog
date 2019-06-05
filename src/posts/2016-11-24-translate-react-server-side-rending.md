@@ -54,38 +54,34 @@ React 提供了一个方法 `renderComponentToStaticMarkup`，该方法将 React
 
 现在我们编写一个 React 组件,`Item`, 组件有 prop `initialCount` 和 state `count`。`count`由`initialCount`初始化，其值在点击时增加。下面是一个最简单实现:
 
-<pre>
-var Item = React.createClass({
-    getInitialState: function() {
-        return {
-            count: this.props.initialCount
-        };
-    },
+	var Item = React.createClass({
+	    getInitialState: function() {
+	        return {
+	            count: this.props.initialCount
+	        };
+	    },
 
-    _increment: function() {
-        this.setState({ count: this.state.count + 1 });
-    },
+	    _increment: function() {
+	        this.setState({ count: this.state.count + 1 });
+	    },
 
-    render: function() {
-        return <div onClick={this._increment}>
-            {this.state.count}
-        </div>;
-    }
-});
-</pre>
+	    render: function() {
+	        return <div onClick={this._increment}>
+	            {this.state.count}
+	        </div>;
+	    }
+	});
 
 然后在服务端渲染该组件，写法为:
 
-<pre>
-var React = require('react');
-...
-var markup = React.renderComponentToString(
-    Item({ initialCount: 7 })
-);
-res.render('template', {
-    markup: markup
-});
-</pre>
+	var React = require('react');
+	...
+	var markup = React.renderComponentToString(
+	    Item({ initialCount: 7 })
+	);
+	res.render('template', {
+	    markup: markup
+	});
 
 然后，在模板中:
 
@@ -95,11 +91,9 @@ res.render('template', {
 
 所以为了解决这个问题，我们需要在浏览器中做类似于下面的事情(暂时假设React 和 Item 是全局的):
 
-<pre>
-var container = document.getElementById('container');
-var component = Item({ initialCount: 7 });
-React.renderComponent(component, container);
-</pre>
+	var container = document.getElementById('container');
+	var component = Item({ initialCount: 7 });
+	React.renderComponent(component, container);
 
 现在刷新页面，点击组件会发现 count 值增加: 表示事件被绑定给组件，和客户端渲染的情况下表现一致。
 
@@ -145,13 +139,11 @@ React.renderComponent(component, container);
 
 由于第二个`<script>`标签完全独立于我们传输给模板的内容，我们可以按照Andrey Popp's 的[示例](!https://github.com/andreypopp/react-quickstart/blob/master/client.js#L101)用`item.jsx`替代第二个`<script>`标签:
 
-<pre>
-if (typeof window !== 'undefined') {
-    var container = document.getElementById("container");
-    var props = JSON.parse(document.getElementById("props").innerHTML);
-    React.renderComponent(Item(props), container);
-}
-</pre>
+	if (typeof window !== 'undefined') {
+	    var container = document.getElementById("container");
+	    var props = JSON.parse(document.getElementById("props").innerHTML);
+	    React.renderComponent(Item(props), container);
+	}
 
 ##### 3.将原始props写入组件自身包含的`<script>`标签
 
@@ -195,23 +187,19 @@ if (typeof window !== 'undefined') {
 
 在服务端要保证`item.js`被打包成bundle，我用了[browserify-middleware](!https://github.com/ForbesLindesay/browserify-middleware)，对应的 Express 中的逻辑应该是：
 
-<pre>
-var browserify = require('browserify-middleware');
-var reactify = require('reactify');
-browserify.settings('transform', ['reactify']);
-app.get('/bundles/item.js', browserify('./jsx/item.jsx'));
-</pre>
+	var browserify = require('browserify-middleware');
+	var reactify = require('reactify');
+	browserify.settings('transform', ['reactify']);
+	app.get('/bundles/item.js', browserify('./jsx/item.jsx'));
 
 一些情况下需要为React打包共用的bundle，还要提供每个组件自身需要的独立的bundle，这种情况下可以这样做:
 
-<pre>
-...
-var shared = ['react'];
-router.get('/bundles/shared.js', browserify(shared));
-app.get('/bundles/item.js', browserify('./jsx/item.jsx', {
-    external: shared
-}));
-</pre>
+	...
+	var shared = ['react'];
+	router.get('/bundles/shared.js', browserify(shared));
+	app.get('/bundles/item.js', browserify('./jsx/item.jsx', {
+	    external: shared
+	}));
 
 ## React是怎样做到的？
 
@@ -225,31 +213,27 @@ app.get('/bundles/item.js', browserify('./jsx/item.jsx', {
 
 在React源码中 `renderComponentToString` 的作用是:
 
-<pre>
-function renderComponentToString(component) {
-    ...
-    var componentInstance = instantiateReactComponent(component);
-    var markup = componentInstance.mountComponent(id, transaction, 0);
-    return ReactMarkupChecksum.addChecksumToMarkup(markup);
-}
-</pre>
+	function renderComponentToString(component) {
+	    ...
+	    var componentInstance = instantiateReactComponent(component);
+	    var markup = componentInstance.mountComponent(id, transaction, 0);
+	    return ReactMarkupChecksum.addChecksumToMarkup(markup);
+	}
 
 进一步查看 `addChecksumToMarkup `方法，可以发现 `data-react-checksum`是对HTML计算出的[Adler-32](!https://en.wikipedia.org/wiki/Adler-32)值，每个服务端渲染的组件都会被添加这个值。
 
 然后，当我们在客户端调用`renderComponent `方法时，对于"新"组件(不曾在客户端React实例中出现的组件，比如在服务端生成的组件)，会执行 `canReuseMarkup` 进行一次检验:
 
-<pre>
-// `markup` 是由组件生成的HTML
-// `element` 是组件被渲染进的目标节点
-canReuseMarkup: function(markup, element) {
-    var existingChecksum = element.getAttribute(
-        ReactMarkupChecksum.CHECKSUM_ATTR_NAME
-    );
-    existingChecksum = existingChecksum && parseInt(existingChecksum, 10);
-    var markupChecksum = adler32(markup);
-    return markupChecksum === existingChecksum;
-}
-</pre>
+	// `markup` 是由组件生成的HTML
+	// `element` 是组件被渲染进的目标节点
+	canReuseMarkup: function(markup, element) {
+	    var existingChecksum = element.getAttribute(
+	        ReactMarkupChecksum.CHECKSUM_ATTR_NAME
+	    );
+	    existingChecksum = existingChecksum && parseInt(existingChecksum, 10);
+	    var markupChecksum = adler32(markup);
+	    return markupChecksum === existingChecksum;
+	}
 
 执行过检验之后，React将不会执行渲染，而是记录下这个组件。
 

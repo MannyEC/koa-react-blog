@@ -18,10 +18,10 @@ https://docs.djangoproject.com/en/dev/ref/csrf/
 
 #### 下面是使用csrf_token时在html和cookie中产生的效果
 form中的token
-![form-csrf](/img/django-csrf-form.png)
+![form-csrf](/img/post/django-csrf-form.png)
 
 cookie中的token
-![cookie-csrf](/img/django-csrf-cookie.png)
+![cookie-csrf](/img/post/django-csrf-cookie.png)
 
 ### 如何使用
 Django Book中给出了以下的使用步骤：

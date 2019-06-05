@@ -1,9 +1,10 @@
 import ActionTypes from './constants';
 
-export function loadArticleList(postType, postTag) {
+export function loadArticleList(postType, postTag, page) {
   const params = {
     postTag,
     postType,
+    page
   };
 
   return (dispatch, getState) => {

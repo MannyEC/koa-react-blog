@@ -45,15 +45,16 @@ tags:        HTML
 当某一事件被触发后，我们可以捕获一个对象（我们称之为 `event`）。这个对象包含了更多关于该事件本身的信息，同时使你能获取 `dataTransfer` 对象，用来设置大部分方法和属性。
 
 我们给每个事件绑定一个回调函数来和 API 交互:
-<pre class="brush: actionscript3; gutter: true">// add a handler to trigger on dragstart 
-//为 dragstart 添加一个处理函数 
 
-document.addEventListener('dragstart', function(event) { 
+	// add a handler to trigger on dragstart 
+	//为 dragstart 添加一个处理函数 
 
-// add your dragstart code here 
-//在此添加你的 dragstart 代码 
+	document.addEventListener('dragstart', function(event) { 
 
-}, false);</pre>
+	// add your dragstart code here 
+	//在此添加你的 dragstart 代码 
+
+	}, false);
 
 ### Drag 相关事件
 
@@ -212,41 +213,43 @@ See the Pen [Native Drag &amp; Drop – Data transfer on a single page](http://c
 在每块拼图的 `dragStart` 事件中，我们首先要设置 `effectAllowed` 属性来允许它进行 `copy` 类型的拖动。
 
 然后，取得当前的 `src`(图片资源) 以及 `outerHTML`(HTML 节点)，将它们写入 data transfer 对象，类型设为 `text/uri-list` 和 `text/html`。而在 IE 浏览器中，只需要写入拖动对象的 `src` ，类型设为 `text`。
-<pre class="brush: actionscript3; gutter: true">var dragItem;
 
-//在拖动开始时触发
 
-function dragStart(event) {
+	var dragItem;
 
-drag = event.target;
+	//在拖动开始时触发
 
-dragItem = event.target;
+	function dragStart(event) {
 
-//给被拖动对象设置 effectAllowed 属性
+	drag = event.target;
 
-event.dataTransfer.effectAllowed = 'copy';
+	dragItem = event.target;
 
-var imageSrc = $(dragItem).prop('src');
+	//给被拖动对象设置 effectAllowed 属性
 
-var imageHTML = $(dragItem).prop('outerHTML');
+	event.dataTransfer.effectAllowed = 'copy';
 
-//判断是否为 IE （仅支持 text 或 URL 类型）
+	var imageSrc = $(dragItem).prop('src');
 
-try {
+	var imageHTML = $(dragItem).prop('outerHTML');
 
-event.dataTransfer.setData('text/uri-list', imageSrc);
+	//判断是否为 IE （仅支持 text 或 URL 类型）
 
-event.dataTransfer.setData('text/html', imageHTML);
+	try {
 
-} catch (e) {
+	event.dataTransfer.setData('text/uri-list', imageSrc);
 
-event.dataTransfer.setData('text', imageSrc);
+	event.dataTransfer.setData('text/html', imageHTML);
 
-}
+	} catch (e) {
 
-$(drag).addClass('drag-active');
+	event.dataTransfer.setData('text', imageSrc);
 
-}</pre>
+	}
+
+	$(drag).addClass('drag-active');
+
+	}
 
 ### 校准 effectAllowed / dropEffect
 
@@ -259,52 +262,52 @@ $(drag).addClass('drag-active');
 此时就要根据具体数据，进行不同的处理。如果我们能获取 `dataHTML` 数据，说明当前处在一个完全支持的浏览器环境下，我们能直接得到拼图块的对象节点。把这个节点添加到 drop 区域中，整个 drop 就实现了。
 
 如果当前浏览器不支持这种方式，我们需要复用在 `dragStart` 时定义的 `dragItem` 变量来获得拼图块的对象节点。然后将此节点添加到drop 区域中，完成所有操作。
-<pre class="brush: actionscript3; gutter: true">
-//在 draggable 对象置入 droppable 对象时调用
-function drop(event) {
 
-drop = this;
-$(drop).removeClass('drop-active');
+	//在 draggable 对象置入 droppable 对象时调用
+	function drop(event) {
 
-var dataList, dataHTML, dataText;
+	drop = this;
+	$(drop).removeClass('drop-active');
 
-//获取数据（要考虑浏览器的不同）
-try {
-dataList = event.dataTransfer.getData('text/uri-list');
-dataHTML = event.dataTransfer.getData('text/html');
-} catch (e) {
-dataText = event.dataTransfer.getData('text');
-}
+	var dataList, dataHTML, dataText;
 
-//能获得 HTML 时
-if (dataHTML) {
-$(drop).empty();
-$(drop).prepend(dataHTML);
+	//获取数据（要考虑浏览器的不同）
+	try {
+	dataList = event.dataTransfer.getData('text/uri-list');
+	dataHTML = event.dataTransfer.getData('text/html');
+	} catch (e) {
+	dataText = event.dataTransfer.getData('text');
+	}
 
-//判断拼图块的位置有没有拼对
-checkCorrectDrop(drop, dragItem);
+	//能获得 HTML 时
+	if (dataHTML) {
+	$(drop).empty();
+	$(drop).prepend(dataHTML);
 
-//查看整个拼图是否已经完成
-checkCorrectFinalImage();
-}
+	//判断拼图块的位置有没有拼对
+	checkCorrectDrop(drop, dragItem);
 
-//只能得到 text（老式浏览器 + IE）
+	//查看整个拼图是否已经完成
+	checkCorrectFinalImage();
+	}
 
-else {
-$(drop).empty();
-$(drop).prepend($(dragItem).clone());
+	//只能得到 text（老式浏览器 + IE）
 
-//判断拼图块的位置有没有拼对
-checkCorrectDrop(drop, dragItem);
+	else {
+	$(drop).empty();
+	$(drop).prepend($(dragItem).clone());
 
-//查看整个拼图是否已经完成
+	//判断拼图块的位置有没有拼对
+	checkCorrectDrop(drop, dragItem);
 
-checkCorrectFinalImage();
-}
+	//查看整个拼图是否已经完成
 
-event.preventDefault();
-event.stopPropagation();
-}</pre>
+	checkCorrectFinalImage();
+	}
+
+	event.preventDefault();
+	event.stopPropagation();
+	}
 
 ### 完成整个游戏
 
@@ -343,15 +346,15 @@ See the Pen [Native Drag and Drop – Dragging files directly onto the website](
 我们在这个示例中，主要关注对置入后的对象进一步处理。也就是说在上一个例子中我们要在对象被 drag 时设置数据，而在本例中我们只需要收集对象被 drop 后的数据，然后决定怎样处理它。
 
 在 `drop` 函数中，我们首先要用 `getData(format)` 方法从 `dataTransfer` 对象中获取信息。
-<pre class="brush: actionscript3; gutter: true">
-//获取被拖入元素的 URL
-try {
-dataValue = event.dataTransfer.getData('text/uri-list');
-dataType = 'text/uri-list';
-} catch (e) {
-dataValue = event.dataTransfer.getData('URL');
-dataType = 'URL';
-}</pre>
+
+	//获取被拖入元素的 URL
+	try {
+	dataValue = event.dataTransfer.getData('text/uri-list');
+	dataType = 'text/uri-list';
+	} catch (e) {
+	dataValue = event.dataTransfer.getData('URL');
+	dataType = 'URL';
+	}
 
 我们用 try-catch 结构来包含代码主体是因为 IE 浏览器无法识别用 `getData()` 方法获取 format 数据，导致抛出 error 并终止进程。
 
@@ -360,61 +363,62 @@ dataType = 'URL';
 大多数我们拖动的对象，比如 images, links 或 data 可能有多种数据类型。因此我们只关注这些对象的 URL，这样做很有效。
 
 如果能获得 `dataValue` 的集合，就表示用户在 drop 区域中拖入了对象。下一步工作就是识别该对象。由于我们只想处理图片文件，但是 API 不能区分图片的 URL 和标准 link 的差别，所以我们需要自己检验一下是否为图片。
-<pre class="brush: actionscript3; gutter: true">
-//判定我们的 URL 是否为一个图片
-imageDropped = false;
-var imageExtensions = ['.jpg','.jpeg','.png','.bmp','.gif'];
-for (i = 0; i&lt; imageExtensions.length; i++) { 
-if (dataValue.indexOf(imageExtensions[i]) !== -1) {
-//创建我们要添加的图片
-var image = '&lt;img src="' + dataValue + '"&gt;';
-drop.append(image);
-imageDropped = true;
-break;  
-}
-}</pre>
+
+	//判定我们的 URL 是否为一个图片
+	imageDropped = false;
+	var imageExtensions = ['.jpg','.jpeg','.png','.bmp','.gif'];
+	for (i = 0; i&lt; imageExtensions.length; i++) { 
+	if (dataValue.indexOf(imageExtensions[i]) !== -1) {
+	//创建我们要添加的图片
+	var image = '&lt;img src="' + dataValue + '"&gt;';
+	drop.append(image);
+	imageDropped = true;
+	break;  
+	}
+	}
 
 创建一个图片扩展名的列表，包含常见的图片类型，如`.jpg` 和 `.png`，检验 URL 中是否出现过这些类型。如果出现，就表示置入的对象为一个图片，然后我们创建一个新的图片对象，给它赋予此 URL 路径。
 
 ### 处理本地 drop 对象
 
 处理本地元素的 drop 方式有一些不同。我们不再用 `getData(format)` 方法，而是用 `files()`。该方法能给我们一个含有所有 dropped 元素的列表，所以我们可以遍历。
-<pre class="brush: actionscript3; gutter: true">var dataFiles = event.dataTransfer.files;
-var dataOutput = []; 
-if (dataFiles) {
-for (i =0; i &lt; dataFiles.length; i++) {
-//在此处执行操作
-} 
-}</pre>
+
+	var dataFiles = event.dataTransfer.files;
+	var dataOutput = []; 
+	if (dataFiles) {
+	for (i =0; i &lt; dataFiles.length; i++) {
+	//在此处执行操作
+	} 
+	}
 
 我们的例子中通过遍历所有拖入的文件并检验是否为图片。循环到的每个文件都有一系列属性，包括 `type` 属性，列出了该文件的 MIME 类型。
-<pre class="brush: actionscript3; gutter: true">
-//判定是否为图片
-if (dataType.match('image.*')) {
-//拖入的为图片，继续下一步
-}</pre>
+
+	//判定是否为图片
+	if (dataType.match('image.*')) {
+	//拖入的为图片，继续下一步
+	}
 
 一旦我们匹配到 image 类型，就创建一个[fileReader](https://developer.mozilla.org/en/docs/Web/API/FileReader) 对象，用它来将文件读入内存。接下来用 `readAsDataURL(item)` 方法读取文件。这一切就绪后，文件就会触发 `onload` 事件，我们要在这个事件中进行下一步操作。
-<pre class="brush: actionscript3; gutter: true">
-//读入内存
-var reader = new FileReader();
 
-//导入元素
-reader.readAsDataURL(dataItem);</pre>
+	//读入内存
+	var reader = new FileReader();
 
-现在要做的就是获取 file reader 的结果，然后把它添加到 DOM 中。这样就是实现了将桌面图片拖入网站的操作。
-<pre class="brush: actionscript3; gutter: true">
-//当图片被导入
-reader.onload = (function(theFile) {
-return function(e) {
-var url = e.target.result;
+	//导入元素
+	reader.readAsDataURL(dataItem);</pre>
 
-drop.append('&lt;img src="' + url + '" title="' + dataName + '"/&gt;');
-messageContainer.append('
-&lt;p&gt;&lt;strong&gt;Successfully dropped an image from your desktop&lt;/strong&gt;&lt;/p&gt;
-');
-};
-})(dataItem);</pre>
+	现在要做的就是获取 file reader 的结果，然后把它添加到 DOM 中。这样就是实现了将桌面图片拖入网站的操作。
+
+	//当图片被导入
+	reader.onload = (function(theFile) {
+	return function(e) {
+	var url = e.target.result;
+
+	drop.append('&lt;img src="' + url + '" title="' + dataName + '"/&gt;');
+	messageContainer.append('
+	&lt;p&gt;&lt;strong&gt;Successfully dropped an image from your desktop&lt;/strong&gt;&lt;/p&gt;
+	');
+	};
+	})(dataItem);
 
 ## 浏览器支持一览
 

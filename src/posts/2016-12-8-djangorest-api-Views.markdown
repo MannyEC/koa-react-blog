@@ -31,28 +31,25 @@ REST framework 提供了 `APIView` 类，它是 Django 中 `View` 的子类。
 
 示例:
 
-<pre>
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import authentication, permissions
+    from rest_framework.views import APIView
+    from rest_framework.response import Response
+    from rest_framework import authentication, permissions
 
-class ListUsers(APIView):
-    """
-    该视图用于列出系统中所有用户
-    * 需要token 认证
-    * 只有admin可以查看该视图
-    """
-    authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = (permissions.IsAdminUser,)
-
-    def get(self, request, format=None):
+    class ListUsers(APIView):
         """
-        返回用户的列表
+        该视图用于列出系统中所有用户
+        * 需要token 认证
+        * 只有admin可以查看该视图
         """
-        usernames = [user.username for user in User.objects.all()]
-        return Response(usernames)
+        authentication_classes = (authentication.TokenAuthentication,)
+        permission_classes = (permissions.IsAdminUser,)
 
-</pre>
+        def get(self, request, format=None):
+            """
+            返回用户的列表
+            """
+            usernames = [user.username for user in User.objects.all()]
+            return Response(usernames)
 
 ## API 策略属性 (policy attributes)
 
@@ -142,13 +139,11 @@ REST framework 允许你使用常规的基于方法的视图，也提供了一�
 
 同 `reverse`方法一样要传入request做为关键字参数：
 
-<pre>
-from rest_framework.decorators import api_view
+    from rest_framework.decorators import api_view
 
-@api_view()
-def hello_world(request):
-    return Response({"message": "Hello, world!"})
-</pre>
+    @api_view()
+    def hello_world(request):
+        return Response({"message": "Hello, world!"})
 
 该视图将会使用 [settings](http://www.django-rest-framework.org/api-guide/settings/) 指定的默认的 renderers, parsers, authentication 等等。
 
@@ -156,30 +151,26 @@ def hello_world(request):
 
 使用下面的做法可以添加其他请求:
 
-<pre>
-@api_view(['GET', 'POST'])
-def hello_world(request):
-    if request.method == 'POST':
-        return Response({"message": "Got some data!", "data": request.data})
-    return Response({"message": "Hello, world!"})
-</pre>
+    @api_view(['GET', 'POST'])
+    def hello_world(request):
+        if request.method == 'POST':
+            return Response({"message": "Got some data!", "data": request.data})
+        return Response({"message": "Hello, world!"})
 
 ### API 策略装饰器(policy decorators)
 
 如果要覆盖默认设置，可以用REST framework 提供的一些view装饰器。它们必须在 `@api_view` 装饰器之后(after/below)调用。举例说明，创建一个视图，用  [throttle](http://www.django-rest-framework.org/api-guide/throttling/)  来保证该视图每天只能被指定用户调用一次，使用 `@throttle_classes` 装饰器,传递一个由throttle 类构成的列表：
 
-<pre>
-from rest_framework.decorators import api_view, throttle_classes
-from rest_framework.throttling import UserRateThrottle
+    from rest_framework.decorators import api_view, throttle_classes
+    from rest_framework.throttling import UserRateThrottle
 
-class OncePerDayUserThrottle(UserRateThrottle):
-        rate = '1/day'
+    class OncePerDayUserThrottle(UserRateThrottle):
+            rate = '1/day'
 
-@api_view(['GET'])
-@throttle_classes([OncePerDayUserThrottle])
-def view(request):
-    return Response({"message": "Hello for today! See you tomorrow!"})
-</pre>
+    @api_view(['GET'])
+    @throttle_classes([OncePerDayUserThrottle])
+    def view(request):
+        return Response({"message": "Hello for today! See you tomorrow!"})
 
 这些装饰器和 `APIView` 子类中的属性相对应。
 

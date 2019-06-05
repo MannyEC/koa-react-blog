@@ -35,20 +35,18 @@ REST framework 提供了两个方法来给API返回绝对URIs。你可以不必�
 
 使用该方法时应该传入request及关键字参数，如:
 
-<pre>
-from rest_framework.reverse import reverse
-from rest_framework.views import APIView
-from django.utils.timezone import now
+	from rest_framework.reverse import reverse
+	from rest_framework.views import APIView
+	from django.utils.timezone import now
 
-class APIRootView(APIView):
-    def get(self, request):
-        year = now().year
-        data = {
-            ...
-            'year-summary-url': reverse('year-summary', args=[year], request=request)
-        }
-        return Response(data)
-</pre>
+	class APIRootView(APIView):
+	    def get(self, request):
+	        year = now().year
+	        data = {
+	            ...
+	            'year-summary-url': reverse('year-summary', args=[year], request=request)
+	        }
+	        return Response(data)
 
 ## reverse_lazy
 
@@ -57,6 +55,4 @@ class APIRootView(APIView):
 
 同 `reverse`方法一样要传入request做为关键字参数：
 
-<pre>
-api_root = reverse_lazy('api-root', request=request)
-</pre>
+	api_root = reverse_lazy('api-root', request=request)

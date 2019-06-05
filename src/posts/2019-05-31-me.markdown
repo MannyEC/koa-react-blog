@@ -9,4 +9,4 @@ tags:       me
 
 ## 一、ME
 
-[![01](/img/me-eason.jpg)](me-eason.jpg)
+[![01](/img/life/me-eason.jpg)](me-eason.jpg)

@@ -86,10 +86,8 @@ Django的 `SimpleTemplateResponse.Response` 需要由原生Python构成的data�
 
 `Response` 类继承于 `SimpleTemplateResponse`, 原有的属性和方法在response中都可使用，例如你可以用原有的方法来设置响应的header：
 
-<pre>
-response = Response()
-response['Cache-Control'] = 'no-cache'
-</pre>
+	response = Response()
+	response['Cache-Control'] = 'no-cache'
 
 ## .render()
 

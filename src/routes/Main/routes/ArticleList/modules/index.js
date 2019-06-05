@@ -2,6 +2,7 @@ import ActionTypes from './constants';
 
 const initialState = {
   articleList: [],
+  count: 0,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -9,7 +10,8 @@ export default function reducer(state = initialState, action = {}) {
     case ActionTypes.ARTICLE_LIST_LOAD_SUCCESS:
       return {
         ...state,
-        articleList: action.result,
+        articleList: action.result.data,
+        count: action.result.count,
       };
     default:
       return state;

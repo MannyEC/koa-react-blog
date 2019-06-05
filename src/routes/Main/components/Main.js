@@ -50,8 +50,11 @@ const menuList = [{
   label: 'Life',
   value: 'life',
   children: [{
-    label: '闲谈',
+    label: '杂记',
     value: 'essay',
+  }, {
+    label: '元宝宝&Eason',
+    value: 'pets',
   }, {
     label: 'About Me',
     value: 'me',
@@ -154,7 +157,14 @@ export default class Main extends Component {
     return (
       <div className={classes.container}>
         <header className={classes.header}>
-          <div className={classes.logo}>eckid</div>
+          <div className={classes.logo}>
+            eckid
+            <img
+              className={classes.easonLogo}
+              alt="eason"
+              src="/img/eason.png"
+            />
+          </div>
           <div className={classes.expandMenu}>
             <ExpandMenu {...this.props} />
           </div>

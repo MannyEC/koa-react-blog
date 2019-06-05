@@ -26,7 +26,7 @@ Web Workers 是 HTML5 提供的一个javascript多线程解决方案，它允许
 
 接着加上三个按钮，来控制数据运算的start，stop，continue。 
 
-![示例](/img/webworkerexp.png)
+![示例](/img/post/webworkerexp.png)
 
 其中start和stop是基本的创建和撤销。核心的用法有这四个
 

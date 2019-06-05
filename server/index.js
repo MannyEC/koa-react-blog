@@ -14,10 +14,10 @@ const port = process.env.PORT
 const app = new Koa();
 const router = new Router();
 
-app.use(index.routes(), index.allowedMethods());
-
 apiserver(router)
+
 app
+  .use(index.routes(), index.allowedMethods())
   .use(router.routes())
   .use(router.allowedMethods());
 

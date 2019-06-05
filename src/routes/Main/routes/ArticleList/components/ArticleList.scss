@@ -1,7 +1,10 @@
-.articleList {
+.container {
   margin-top: 30px;
   width: 90%;
   max-width: 900px;
+}
+
+.articleList {
 }
 
 .articleCard {
@@ -49,4 +52,30 @@
 
 .articleCardTime {
   
+}
+
+.articlePageSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.articlePageBtnContainer {
+  width: 150px;
+
+  button {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    height: 30px;
+  }
+
+  button:hover {
+    color: rgb(237, 128, 95);
+    border: 1px solid rgb(237, 128, 95);
+  }
+}
+
+.articleCount {
+  color: #fff;
 }

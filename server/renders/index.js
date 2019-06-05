@@ -49,7 +49,7 @@ const getLoader = (RouterConfigs, url) => {
         const { action, getParams } = item;
 
         const wrappedAction = (store) => {
-          const requestParams = getParams(store);
+          const requestParams = getParams ? getParams(store) : undefined;
           if (requestParams) {
             return store.dispatch(action.apply(null, requestParams));
             

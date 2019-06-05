@@ -8,28 +8,45 @@ const filePath = path.resolve('./src/posts');
 
 const postListFilter = (ctx, queryset) => {
   let ret = queryset;
-  const fields = ['postTag', 'postType'];
+  const fields = ['postTag', 'postType', 'page'];
   const req_query = ctx.request.query;
+
   if (!req_query.postType) {
-    return queryset;
+    ret = queryset;
   } else {
     ret = ret.filter((post) => post.type === req_query.postType)
   }
   if (req_query.postTag) {
     ret = ret.filter((post) => {
       const tags = post.tags.toUpperCase();
-
       return tags.includes(req_query.postTag.toUpperCase())
     })
   }
+  const count = ret.length;
+  const page = parseInt(req_query.page);
+  if (page) {
+    const page_size = 10;
+    if ((page_size * page > ret.length) &&(page_size * (page - 1) > ret.length)) return { data: [], count};
+    if (page_size * page > ret.length) {
+      ret = ret.slice((page - 1) * page_size)
+    } else {
+      console.log('he')
+      ret = ret.slice((page -1) * page_size, page * page_size)
+    }
+  }
 
-  return ret;
+  return {
+    data: ret,
+    count,
+  };
 }
 
 const apiserver = (router) => {
   // get post list
   router.get('/api/v1/posts', async (ctx, next) => {
     let files = [];
+    // console.log(ctx)
+    // console.log(ctx.params)
     await new Promise((resolve, reject) => {
       fs.readFile(`${filePath}/index.json`, function(err, data) {
         if (err) ctx.throw(err);

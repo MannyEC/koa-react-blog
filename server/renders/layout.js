@@ -3,11 +3,11 @@ exports.layout = function (content, initState) {
   return `
   <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="theme-color" content="#000000">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="keywords" content="eckid,eckidecho,博客,前端">
   <link href="/main.css" rel="stylesheet">
   <style type="text/css">
     body {
@@ -15,7 +15,7 @@ exports.layout = function (content, initState) {
       background: #222c35;
     }
   </style>
-  <title>Eckid Blooooooog</title>
+  <title>Eckid Blog</title>
 </head>
 
 <body>
