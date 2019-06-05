@@ -30,7 +30,6 @@ const postListFilter = (ctx, queryset) => {
     if (page_size * page > ret.length) {
       ret = ret.slice((page - 1) * page_size)
     } else {
-      console.log('he')
       ret = ret.slice((page -1) * page_size, page * page_size)
     }
   }
