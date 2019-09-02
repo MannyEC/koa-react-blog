@@ -29,7 +29,7 @@
         "DEBUG": "app:*",
         "PROTOCOL": "http",
         "HOST": "localhost",
-        "PORT": 8910,
+        "PORT": 80,
         "NODE_TLS_REJECT_UNAUTHORIZED": 0
       }
     },
@@ -41,7 +41,7 @@
         "DEBUG": "app:*",
         "PROTOCOL": "http",
         "HOST": "localhost",
-        "PORT": 8910,
+        "PORT": 80,
         "NODE_TLS_REJECT_UNAUTHORIZED": 0
       }
     },

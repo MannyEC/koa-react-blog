@@ -9,7 +9,7 @@ const staticServer = require('koa-static');
 const index = require('./routes/index');
 const apiserver = require('./Api/api').default;
 
-const port = process.env.PORT
+const port = process.env.PORT || 80;
 
 const app = new Koa();
 const router = new Router();

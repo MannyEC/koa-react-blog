@@ -3,8 +3,23 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const Router = require('koa-router');
+const moment = require('moment');
 const staticServer = require('koa-static');
 const filePath = path.resolve('./src/posts');
+
+const orderByTime = (queryset, direction = true) => {
+  // TODO use direction
+
+  function compareData(a, b) {
+    if (moment(a.date).isBefore(b.date)) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+
+  return queryset.sort(compareData);
+}
 
 const postListFilter = (ctx, queryset) => {
   let ret = queryset;
@@ -16,6 +31,10 @@ const postListFilter = (ctx, queryset) => {
   } else {
     ret = ret.filter((post) => post.type === req_query.postType)
   }
+
+  // order by time
+  ret = orderByTime(ret);
+
   if (req_query.postTag) {
     ret = ret.filter((post) => {
       const tags = post.tags.toUpperCase();
@@ -23,6 +42,7 @@ const postListFilter = (ctx, queryset) => {
     })
   }
   const count = ret.length;
+
   const page = parseInt(req_query.page);
   if (page) {
     const page_size = 10;
@@ -44,8 +64,6 @@ const apiserver = (router) => {
   // get post list
   router.get('/api/v1/posts', async (ctx, next) => {
     let files = [];
-    // console.log(ctx)
-    // console.log(ctx.params)
     await new Promise((resolve, reject) => {
       fs.readFile(`${filePath}/index.json`, function(err, data) {
         if (err) ctx.throw(err);

@@ -14,7 +14,7 @@ function formatUrl(path) {
 }
 
 function nodeUrl(path) {
-  return `http://localhost:8910/api/v1${path}`;
+  return `http://localhost/api/v1${path}`;
 }
 
 class _ApiClient {
