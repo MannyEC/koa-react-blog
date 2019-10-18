@@ -58,6 +58,10 @@
   flex-wrap: wrap;
 }
 
+.subMenuItem {
+  width: 300px,
+}
+
 .subMenuItem:hover {
   color: #fff;
   background: burlywood;
@@ -87,4 +91,10 @@
 
 .navSectionItem:hover {
   color: #ffffff;
+}
+
+@media screen and (max-width: 900px) {
+  .subMenuItem {
+    width: unset,
+  }
 }

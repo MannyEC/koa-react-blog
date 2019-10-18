@@ -16,7 +16,6 @@ const colorfulStyle = (index) => {
     borderBottom: `1px solid ${colors[index]}`,
     fontSize: 20,
     marginRight: 10,
-    width: '300px',
     fontWeight: 800,
   };
 };
